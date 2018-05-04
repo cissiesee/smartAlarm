@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3608A57620997DFA00E52CE0 /* AlarmDetail.swift */; };
 		3640CE7E2094104300520D06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE7D2094104300520D06 /* AppDelegate.swift */; };
 		3640CE802094104300520D06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE7F2094104300520D06 /* ViewController.swift */; };
 		3640CE832094104300520D06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3640CE812094104300520D06 /* Main.storyboard */; };
@@ -14,6 +15,13 @@
 		3640CE882094104300520D06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3640CE862094104300520D06 /* LaunchScreen.storyboard */; };
 		3640CE932094104300520D06 /* smartAlarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE922094104300520D06 /* smartAlarmTests.swift */; };
 		3640CE9E2094104300520D06 /* smartAlarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE9D2094104300520D06 /* smartAlarmUITests.swift */; };
+		3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CEAB2094117100520D06 /* AlarmCell.swift */; };
+		3640CEAE2094119000520D06 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CEAD2094119000520D06 /* Alarm.swift */; };
+		3640CEB02094121300520D06 /* AlarmsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CEAF2094121300520D06 /* AlarmsViewController.swift */; };
+		3640CEB22094122D00520D06 /* AlarmList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CEB12094122D00520D06 /* AlarmList.swift */; };
+		36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ADA73E209962500087F603 /* AlarmDetailViewController.swift */; };
+		36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B3E268209A9D3700FBDDB6 /* WebViewController.swift */; };
+		36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B3E26B209AD3E400FBDDB6 /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3608A57620997DFA00E52CE0 /* AlarmDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetail.swift; sourceTree = "<group>"; };
 		3640CE7A2094104300520D06 /* smartAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3640CE7D2094104300520D06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3640CE7F2094104300520D06 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +56,13 @@
 		3640CE992094104300520D06 /* smartAlarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = smartAlarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3640CE9D2094104300520D06 /* smartAlarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smartAlarmUITests.swift; sourceTree = "<group>"; };
 		3640CE9F2094104300520D06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3640CEAB2094117100520D06 /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
+		3640CEAD2094119000520D06 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		3640CEAF2094121300520D06 /* AlarmsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmsViewController.swift; sourceTree = "<group>"; };
+		3640CEB12094122D00520D06 /* AlarmList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmList.swift; sourceTree = "<group>"; };
+		36ADA73E209962500087F603 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
+		36B3E268209A9D3700FBDDB6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		36B3E26B209AD3E400FBDDB6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +98,7 @@
 				3640CE912094104300520D06 /* smartAlarmTests */,
 				3640CE9C2094104300520D06 /* smartAlarmUITests */,
 				3640CE7B2094104300520D06 /* Products */,
+				36B3E26A209AD3E300FBDDB6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +115,10 @@
 		3640CE7C2094104300520D06 /* smartAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				36B3E267209A99FF00FBDDB6 /* data */,
+				36B3E266209A99D600FBDDB6 /* prototype */,
+				36B3E265209A98CF00FBDDB6 /* components */,
+				36B3E264209A98A500FBDDB6 /* controllers */,
 				3640CE7D2094104300520D06 /* AppDelegate.swift */,
 				3640CE7F2094104300520D06 /* ViewController.swift */,
 				3640CE812094104300520D06 /* Main.storyboard */,
@@ -123,6 +145,49 @@
 				3640CE9F2094104300520D06 /* Info.plist */,
 			);
 			path = smartAlarmUITests;
+			sourceTree = "<group>";
+		};
+		36B3E264209A98A500FBDDB6 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+				36ADA73E209962500087F603 /* AlarmDetailViewController.swift */,
+				3640CEAF2094121300520D06 /* AlarmsViewController.swift */,
+				36B3E268209A9D3700FBDDB6 /* WebViewController.swift */,
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		36B3E265209A98CF00FBDDB6 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				3640CEAB2094117100520D06 /* AlarmCell.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		36B3E266209A99D600FBDDB6 /* prototype */ = {
+			isa = PBXGroup;
+			children = (
+				3608A57620997DFA00E52CE0 /* AlarmDetail.swift */,
+				3640CEAD2094119000520D06 /* Alarm.swift */,
+			);
+			path = prototype;
+			sourceTree = "<group>";
+		};
+		36B3E267209A99FF00FBDDB6 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				3640CEB12094122D00520D06 /* AlarmList.swift */,
+			);
+			path = data;
+			sourceTree = "<group>";
+		};
+		36B3E26A209AD3E300FBDDB6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				36B3E26B209AD3E400FBDDB6 /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,7 +325,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3640CE802094104300520D06 /* ViewController.swift in Sources */,
+				36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */,
+				36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */,
+				3640CEB22094122D00520D06 /* AlarmList.swift in Sources */,
 				3640CE7E2094104300520D06 /* AppDelegate.swift in Sources */,
+				3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */,
+				3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */,
+				3640CEAE2094119000520D06 /* Alarm.swift in Sources */,
+				3640CEB02094121300520D06 /* AlarmsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +501,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QHE93S5T2K;
 				INFOPLIST_FILE = smartAlarm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hzt.smartAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,6 +517,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QHE93S5T2K;
 				INFOPLIST_FILE = smartAlarm/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hzt.smartAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
