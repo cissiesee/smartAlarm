@@ -22,6 +22,9 @@
 		36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ADA73E209962500087F603 /* AlarmDetailViewController.swift */; };
 		36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B3E268209A9D3700FBDDB6 /* WebViewController.swift */; };
 		36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B3E26B209AD3E400FBDDB6 /* WebKit.framework */; };
+		36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */; };
+		36CC8D3D20AE94AA000D41E7 /* constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CC8D3C20AE94AA000D41E7 /* constant.swift */; };
+		7CBA963AB12DB7C321C76111 /* Pods_smartAlarm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartAlarm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3608A57620997DFA00E52CE0 /* AlarmDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetail.swift; sourceTree = "<group>"; };
 		3640CE7A2094104300520D06 /* smartAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3640CE7D2094104300520D06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +67,10 @@
 		36ADA73E209962500087F603 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
 		36B3E268209A9D3700FBDDB6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		36B3E26B209AD3E400FBDDB6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailCell.swift; sourceTree = "<group>"; };
+		36CC8D3C20AE94AA000D41E7 /* constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constant.swift; sourceTree = "<group>"; };
+		6B70FEC8EF3D04940950CC12 /* Pods-smartAlarm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.debug.xcconfig"; sourceTree = "<group>"; };
+		E07EF6CAFC6AC8878917C9FE /* Pods-smartAlarm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.release.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */,
+				7CBA963AB12DB7C321C76111 /* Pods_smartAlarm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +108,7 @@
 				3640CE9C2094104300520D06 /* smartAlarmUITests */,
 				3640CE7B2094104300520D06 /* Products */,
 				36B3E26A209AD3E300FBDDB6 /* Frameworks */,
+				4CBCCA474C64EF383D36CE80 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -161,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				3640CEAB2094117100520D06 /* AlarmCell.swift */,
+				36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -178,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				3640CEB12094122D00520D06 /* AlarmList.swift */,
+				36CC8D3C20AE94AA000D41E7 /* constant.swift */,
 			);
 			path = data;
 			sourceTree = "<group>";
@@ -186,8 +198,18 @@
 			isa = PBXGroup;
 			children = (
 				36B3E26B209AD3E400FBDDB6 /* WebKit.framework */,
+				274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4CBCCA474C64EF383D36CE80 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6B70FEC8EF3D04940950CC12 /* Pods-smartAlarm.debug.xcconfig */,
+				E07EF6CAFC6AC8878917C9FE /* Pods-smartAlarm.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -197,9 +219,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3640CEA22094104300520D06 /* Build configuration list for PBXNativeTarget "smartAlarm" */;
 			buildPhases = (
+				6A85FF6C4589A15AB40A0549 /* [CP] Check Pods Manifest.lock */,
 				3640CE762094104300520D06 /* Sources */,
 				3640CE772094104300520D06 /* Frameworks */,
 				3640CE782094104300520D06 /* Resources */,
+				7B8C94C9229DF3BEF01C06FF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -319,6 +343,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6A85FF6C4589A15AB40A0549 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-smartAlarm-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7B8C94C9229DF3BEF01C06FF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3640CE762094104300520D06 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -330,9 +393,11 @@
 				3640CEB22094122D00520D06 /* AlarmList.swift in Sources */,
 				3640CE7E2094104300520D06 /* AppDelegate.swift in Sources */,
 				3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */,
+				36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */,
 				3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */,
 				3640CEAE2094119000520D06 /* Alarm.swift in Sources */,
 				3640CEB02094121300520D06 /* AlarmsViewController.swift in Sources */,
+				36CC8D3D20AE94AA000D41E7 /* constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +561,7 @@
 		};
 		3640CEA32094104300520D06 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6B70FEC8EF3D04940950CC12 /* Pods-smartAlarm.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -512,6 +578,7 @@
 		};
 		3640CEA42094104300520D06 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E07EF6CAFC6AC8878917C9FE /* Pods-smartAlarm.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

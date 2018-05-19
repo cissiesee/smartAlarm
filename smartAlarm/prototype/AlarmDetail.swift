@@ -9,11 +9,11 @@
 import UIKit
 
 class AlarmDetail: NSObject {
-    var isRepeat: Bool
+    var repeatType: String
     var sound: String
     
-    init(isRepeat: Bool, sound: String) {
-        self.isRepeat = isRepeat
+    init(repeatType: String, sound: String) {
+        self.repeatType = repeatType
         self.sound = sound
         super.init()
     }

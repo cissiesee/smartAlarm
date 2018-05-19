@@ -9,12 +9,14 @@
 import UIKit
 
 class Alarm: NSObject {
+    var createTime: String
     var time: String
     var info: String
     var isOn: Bool
     var details: AlarmDetail
     
-    init(time: String, info: String, isOn: Bool, details: AlarmDetail) {
+    init(createTime: String, time: String, info: String, isOn: Bool, details: AlarmDetail) {
+        self.createTime = createTime
         self.time = time
         self.info = info
         self.isOn = isOn

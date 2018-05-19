@@ -7,7 +7,7 @@
 //
 
 let alarmList = [
-    Alarm(time: "04:30", info: "Tic-Tac-Toe", isOn: false, details: AlarmDetail(isRepeat: false, sound: "")),
-    Alarm(time: "06:00", info: "Spin the Bottle", isOn: true, details: AlarmDetail(isRepeat: true, sound: "")),
-    Alarm(time: "07:30", info: "Texas Hold 'em Poker", isOn: false, details: AlarmDetail(isRepeat: false, sound: ""))
+    Alarm(createTime: "", time: "04:30", info: "Tic-Tac-Toe", isOn: false, details: AlarmDetail(repeatType: "", sound: "")),
+    Alarm(createTime: "", time: "06:00", info: "Spin the Bottle", isOn: true, details: AlarmDetail(repeatType: "", sound: "")),
+    Alarm(createTime: "", time: "07:30", info: "Texas Hold 'em Poker", isOn: false, details: AlarmDetail(repeatType: "", sound: ""))
 ]

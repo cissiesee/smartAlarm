@@ -7,17 +7,62 @@
 //
 
 import UIKit
+import Alamofire
 
 class AlarmsViewController: UITableViewController {
-    var alarms: [Alarm] = alarmList
+    var alarms: [Alarm] = []
     override func viewDidLoad() {
+        print("AlarmsViewController did load")
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("AlarmsViewController viewDidAppear")
+        updateAlarmsData()
+    }
+    
+    func updateAlarmsData(fromServer: Bool = true) {
+        if fromServer {
+            Alamofire.request(host + "getAlarms", method: .get, encoding: JSONEncoding.default)
+                .responseJSON { (response) in
+                    print(response.result)
+                    switch response.result {
+                    case .success(let json):
+                        // print("\(json)")                        //打印JSON数据
+                        // print("\(type(of: json))")              //JSON的动态类型
+                        let dict = json as! Dictionary<String,AnyObject>
+                        // print(dict)
+                        let data = dict["data"] as! Dictionary<String,AnyObject>
+                        // print(data)
+                        let list = data["list"] as! Array<AnyObject>
+                        print(list)
+                        self.alarms = []
+                        for alarmItem in list {
+                            let alarmItemDetail = alarmItem["detail"] as! Dictionary<String,AnyObject>
+                            self.alarms.append(Alarm(
+                                createTime: alarmItem["createTime"] as! String,
+                                time: alarmItem["time"] as! String,
+                                info: alarmItem["info"] as! String,
+                                isOn: alarmItem["isOn"] as! Bool,
+                                details: AlarmDetail(
+                                    repeatType: alarmItemDetail["repeatType"] as! String,
+                                    sound: alarmItemDetail["sound"] as! String
+                                ))
+                            )
+                        }
+                        self.tableView.reloadData()
+                        // print("\(origin)")
+                        // let headers = dict["headers"] as! Dictionary<String,String>
+                        // let AcceptEncoding = headers["Accept-Encoding"]
+                        // print("\(String(describing: AcceptEncoding))")
+                    case .failure(let error):
+                        print("\(error)")
+                    }
+            }
+        } else {
+            self.tableView.reloadData()
+        }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +83,7 @@ class AlarmsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("AlarmsViewController, cellForRowAt:" + "\(indexPath.row)")
+//        print("AlarmsViewController, cellForRowAt:" + "\(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as! AlarmCell
         let alarm = alarms[indexPath.row] as Alarm
         cell.timeLabel.text = alarm.time
@@ -49,18 +94,22 @@ class AlarmsViewController: UITableViewController {
         return cell
     }
     
-    @IBAction func cancelBack(segue:UIStoryboardSegue) {
-        //
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView!.deselectRow(at: indexPath, animated: true)
+        let targetAlarm = alarms[indexPath.row]
+        
+        self.performSegue(withIdentifier: "EditDetailView", sender: targetAlarm)
     }
     
-    @IBAction func saveBack(segue:UIStoryboardSegue) {
-        let controller = segue.source as! AlarmDetailViewController
-        let dformatter = DateFormatter()
-        dformatter.dateFormat = "HH:mm"
-        // 使用日期格式器格式化日期、时间
-        let datestr = dformatter.string(from: controller.timeSelector.date)
-        alarms.append(Alarm(time: datestr, info: "info", isOn: true, details: AlarmDetail(isRepeat: true, sound: "")))
-        self.tableView.reloadData()
+    @IBAction override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("alarmviewcontroller, prepare")
+        if segue.identifier == "EditDetailView"{
+            let navController = segue.destination as! UINavigationController
+            let desController = navController.topViewController as! AlarmDetailViewController
+            desController.navigationItem.title = "编辑闹钟"
+            desController.type = "edit"
+            desController.alarm = sender as! Alarm
+        }
     }
 
     /*
