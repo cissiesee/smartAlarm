@@ -13,10 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
         return true
+    }
+    
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
+        if let userInfo = notification.userInfo{
+            let customField1 = userInfo["CustomField1"] as! String
+            print("\(#function) recive a notification: customField1 is \(customField1)")
+            
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

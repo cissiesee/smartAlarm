@@ -6,4 +6,4 @@
 //  Copyright © 2018年 hzt. All rights reserved.
 //
 
-let host = "http://192.168.3.104:5000/"
+let host = "http://192.168.1.104:5000/"
