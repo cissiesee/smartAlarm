@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var alarms: [Alarm] = []
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+        
+        alarms = jsonListToAlarms(jsonList: LocalSaver.getItems())
         return true
     }
     
@@ -47,9 +51,108 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        LocalSaver.saveItems(jsonData: alarmsToJsonList(alarms: alarms))
     }
-
-
+    
+    func alarmsToJsonList(alarms: [Alarm]) -> [Dictionary<String, Any>] {
+        var jsonList: [Dictionary<String, Any>] = []
+        for alarm in alarms {
+            jsonList.append(alarmToJson(alarm: alarm))
+        }
+        return jsonList
+    }
+    
+    func alarmToJson(alarm: Alarm) -> Dictionary<String, Any> {
+        let requestData: [String:Any] = [
+            "createTime": alarm.createTime,
+            "time": alarm.time,
+            "info": alarm.info,
+            "isOn": alarm.isOn,
+            "detail": [
+                "repeatType": alarm.details.repeatType,
+                "sound": alarm.details.sound
+            ]
+        ]
+        return requestData
+    }
+    
+    func jsonListToAlarms(jsonList: [Dictionary<String, Any>]) -> [Alarm] {
+        var _alarms: [Alarm] = []
+        for alarmItem in jsonList {
+            _alarms.append(jsonToAlarm(json: alarmItem))
+        }
+        return _alarms
+    }
+    
+    func jsonToAlarm(json: Dictionary<String, Any>) -> Alarm {
+        let alarmItemDetail = json["detail"] as! Dictionary<String,AnyObject>
+        return Alarm(
+            createTime: json["createTime"] as! String,
+            time: json["time"] as! String,
+            info: json["info"] as! String,
+            isOn: json["isOn"] as! Bool,
+            details: AlarmDetail(
+                repeatType: alarmItemDetail["repeatType"] as! String,
+                sound: alarmItemDetail["sound"] as! String
+            )
+        )
+    }
+    
+    func removeAlarm(alarmId: String) -> [Alarm] {
+        var target: Alarm? = nil
+        for alarm in alarms {
+            if alarm.createTime == alarmId {
+                target = alarm
+                break
+            }
+        }
+        if target != nil {
+            alarms.remove(at: alarms.index(of: target!)!)
+        } else {
+            print("removeAlarm error: no alarm to remove")
+        }
+        return alarms
+    }
+    
+    func addAlarm(alarm: Alarm) -> [Alarm] {
+        print("addAlarm", alarm)
+        alarms.append(alarm)
+        return alarms
+    }
+    
+    func editAlarm(alarm: Alarm) -> [Alarm] {
+        print("editAlarm", alarm)
+        var targetIndex: Int? = nil
+        for item in alarms.enumerated() {
+            let _alarm = item.element
+            if _alarm.createTime == alarm.createTime {
+                targetIndex = item.offset
+                break
+            }
+        }
+        if targetIndex != nil {
+            alarms[targetIndex!] = alarm
+        } else {
+            print("editAlarm error: no alarm to edit")
+        }
+        return alarms
+    }
+    
+    func updateAlarmsToServer() {
+        print("updateAlarmsToServer")
+        Alamofire.request(host + "updateAlarms", method: .post, parameters: ["list": alarmsToJsonList(alarms: alarms)], encoding: JSONEncoding.default)
+            .responseJSON { (response) in
+                switch response.result {
+                case .success(let json):
+                    print("\(json)")
+                    let dict = json as! Dictionary<String,String>
+                    if dict["code"] == "0" {
+                        print("update success")
+                    }
+                case .failure(let error):
+                    print("\(error)")
+                }
+        }
+    }
 }
 

@@ -13,6 +13,7 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var detailTable: UITableView!
     @IBOutlet weak var timeSelector: UIDatePicker!
     
+    var appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     var type: String = "add"
     var dateFormatter = "HH:mm"
     var alarm: Alarm = Alarm(
@@ -27,8 +28,8 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     var detailContents: [String] = []
     
     override func viewDidLoad() {
+        print("AlarmDetailViewController viewDidLoad")
         super.viewDidLoad()
-        print(alarm)
         if type == "edit" {
             setSelectorTime(time:alarm.time)
         }
@@ -107,27 +108,13 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func deleteAlarm() {
-        let requestData = ["createTime": alarm.createTime]
-        LocalSaver.removeItem(jsonData: requestData)
+        appDelegate.removeAlarm(alarmId: alarm.createTime)
         dismiss(animated: true, completion: nil)
-//        Alamofire.request(host + "deleteAlarm", method: .post, parameters: requestData, encoding: JSONEncoding.default)
-//            .responseJSON { (response) in
-//                switch response.result {
-//                case .success(let json):
-//                    print("\(json)")
-//                    let dict = json as! Dictionary<String,String>
-//                    if dict["code"] == "0" {
-//                        self.dismiss(animated: true, completion: nil)
-//                        //TODO 回退上一页
-//                    }
-//                case .failure(let error):
-//                    print("\(error)")
-//                }
-//        }
     }
     
     @IBAction func addOrEditAlarm() {
         print("addOrEditAlarm")
+        
         let date = NSDate()
         
         if type == "add" {
@@ -136,48 +123,13 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         
         alarm.time = getSelectorTime()
         
-        //TODO 对alarm进行赋值
-        
-        let requestData: [String:Any] = [
-            "createTime": alarm.createTime,
-            "time": alarm.time,
-            "info": alarm.info,
-            "isOn": alarm.isOn,
-            "detail": [
-                "repeatType": alarm.details.repeatType,
-                "sound": alarm.details.sound
-            ]
-        ]
-        
         if type == "add" {
-            LocalSaver.addItem(jsonData: requestData)
-        } else {
-            LocalSaver.editItem(jsonData: requestData)
+            appDelegate.addAlarm(alarm: alarm)
+        } else if type == "edit" {
+            appDelegate.editAlarm(alarm: alarm)
         }
         
         dismiss(animated: true, completion: nil)
-        
-//        LocalSaver.addItem(jsonData: requestData)
-        
-//        print("localdata", LocalSaver.getData()[0])
-        
-//        Alamofire.request(host + type + "Alarm", method: .post, parameters: requestData, encoding: JSONEncoding.default)
-//            .responseJSON { (response) in
-//                switch response.result {
-//                case .success(let json):
-//                    print("\(json)")
-//                    let dict = json as! Dictionary<String,String>
-//                    if dict["code"] == "0" {
-//                        self.dismiss(animated: true, completion: nil)
-//                    }
-//                case .failure(let error):
-//                    print("\(error)")
-//                }
-//        }
-    }
-    
-    @IBAction func backhere() {
-        
     }
 
     /*

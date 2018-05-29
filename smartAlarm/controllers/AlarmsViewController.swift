@@ -7,79 +7,23 @@
 //
 
 import UIKit
-import Alamofire
 
 class AlarmsViewController: UITableViewController {
     var alarms: [Alarm] = []
+    var appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         print("AlarmsViewController did load")
         super.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         print("AlarmsViewController viewDidAppear")
         updateAlarmsData()
     }
     
     func updateAlarmsData() {
-        let jsonList = LocalSaver.getItems() as! [Dictionary<String, Any>]
-        print(jsonList)
-        alarms = []
-        for alarmItem in jsonList {
-            let alarmItemDetail = alarmItem["detail"] as! Dictionary<String,AnyObject>
-            alarms.append(Alarm(
-                createTime: alarmItem["createTime"] as! String,
-                time: alarmItem["time"] as! String,
-                info: alarmItem["info"] as! String,
-                isOn: alarmItem["isOn"] as! Bool,
-                details: AlarmDetail(
-                    repeatType: alarmItemDetail["repeatType"] as! String,
-                    sound: alarmItemDetail["sound"] as! String
-                ))
-            )
-        }
-        self.tableView.reloadData()
-//        if fromServer {
-//            Alamofire.request(host + "getAlarms", method: .get, encoding: JSONEncoding.default)
-//                .responseJSON { (response) in
-//                    print(response.result)
-//                    switch response.result {
-//                    case .success(let json):
-//                        // print("\(json)")                        //打印JSON数据
-//                        // print("\(type(of: json))")              //JSON的动态类型
-//                        let dict = json as! Dictionary<String,AnyObject>
-//                        // print(dict)
-//                        let data = dict["data"] as! Dictionary<String,AnyObject>
-//                        // print(data)
-//                        let list = data["list"] as! Array<AnyObject>
-//                        print(list)
-//                        self.alarms = []
-//                        for alarmItem in list {
-//                            let alarmItemDetail = alarmItem["detail"] as! Dictionary<String,AnyObject>
-//                            self.alarms.append(Alarm(
-//                                createTime: alarmItem["createTime"] as! String,
-//                                time: alarmItem["time"] as! String,
-//                                info: alarmItem["info"] as! String,
-//                                isOn: alarmItem["isOn"] as! Bool,
-//                                details: AlarmDetail(
-//                                    repeatType: alarmItemDetail["repeatType"] as! String,
-//                                    sound: alarmItemDetail["sound"] as! String
-//                                ))
-//                            )
-//                        }
-//                        self.tableView.reloadData()
-//                        // print("\(origin)")
-//                        // let headers = dict["headers"] as! Dictionary<String,String>
-//                        // let AcceptEncoding = headers["Accept-Encoding"]
-//                        // print("\(String(describing: AcceptEncoding))")
-//                    case .failure(let error):
-//                        print("\(error)")
-//                    }
-//            }
-//        } else {
-//            self.tableView.reloadData()
-//        }
-
+        alarms = appDelegate.alarms
+        tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {

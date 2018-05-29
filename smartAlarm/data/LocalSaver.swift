@@ -32,12 +32,14 @@ class LocalSaver {
     }
     
     static func saveItems(jsonData: [Dictionary<String, Any>]) {
+        print("localsaver saveItems")
         let filePath = getLocalFile()
         let dataSource = NSArray(array: jsonData)
         dataSource.write(toFile: filePath, atomically: true)
     }
     
     static func addItem(jsonData: Dictionary<String, Any>) {
+        print("localsaver addItem")
         let filePath = getLocalFile()
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         dataSource?.add(jsonData)
@@ -45,6 +47,7 @@ class LocalSaver {
     }
     
     static func editItem(jsonData: Dictionary<String, Any>) {
+        print("localsaver editItem")
         let filePath = getLocalFile()
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         let target = findObjectInArray(array: dataSource as! [Dictionary<String, Any>], contains: jsonData)
@@ -56,6 +59,7 @@ class LocalSaver {
     }
     
     static func removeItem(jsonData: Dictionary<String, Any>) {
+        print("localsaver removeItem")
         let filePath = getLocalFile()
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         let target = findObjectInArray(array: dataSource as! [Dictionary<String, Any>], contains: jsonData)
@@ -66,15 +70,17 @@ class LocalSaver {
     }
     
     static func clearItems() {
+        print("localsaver clearItems")
         let filePath = getLocalFile()
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         dataSource?.removeAllObjects()
         dataSource?.write(toFile: filePath, atomically: true)
     }
     
-    static func getItems() -> NSArray {
+    static func getItems() -> [Dictionary<String, Any>] {
+        print("localsaver getItems")
         let filePath = getLocalFile()
         let dataSource = NSArray(contentsOfFile: filePath)
-        return dataSource!
+        return dataSource as! [Dictionary<String, Any>]
     }
 }
