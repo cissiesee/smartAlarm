@@ -8,29 +8,38 @@
 
 import UIKit
 import Alamofire
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var alarms: [Alarm] = []
+    
+    let notificationHandler = NotificationHandler()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
-        application.registerUserNotificationSettings(notificationSettings)
+//        let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
+//        application.registerUserNotificationSettings(notificationSettings)
         
+        
+        //设置通知代理
+        UNUserNotificationCenter.current().delegate = notificationHandler
+        
+        //获取本地存储的闹铃数据
         alarms = jsonListToAlarms(jsonList: LocalSaver.getItems())
+        
         return true
     }
     
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        if let userInfo = notification.userInfo{
-            let customField1 = userInfo["CustomField1"] as! String
-            print("\(#function) recive a notification: customField1 is \(customField1)")
-            
-        }
-    }
+//    func application(_ application: UIApplication, didReceive notification: UNUserNotificationCenter) {
+////        if let userInfo = notification.userInfo{
+////            let customField1 = userInfo["CustomField1"] as! String
+////            print("\(#function) recive a notification: customField1 is \(customField1)")
+////
+////        }
+//    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -64,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func alarmToJson(alarm: Alarm) -> Dictionary<String, Any> {
         let requestData: [String:Any] = [
-            "createTime": alarm.createTime,
+            "id": alarm.id,
             "time": alarm.time,
             "info": alarm.info,
             "isOn": alarm.isOn,
@@ -78,6 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func jsonListToAlarms(jsonList: [Dictionary<String, Any>]) -> [Alarm] {
         var _alarms: [Alarm] = []
+        print(jsonList)
         for alarmItem in jsonList {
             _alarms.append(jsonToAlarm(json: alarmItem))
         }
@@ -87,7 +97,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func jsonToAlarm(json: Dictionary<String, Any>) -> Alarm {
         let alarmItemDetail = json["detail"] as! Dictionary<String,AnyObject>
         return Alarm(
-            createTime: json["createTime"] as! String,
+            id: json["id"] as! String,
             time: json["time"] as! String,
             info: json["info"] as! String,
             isOn: json["isOn"] as! Bool,
@@ -101,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func removeAlarm(alarmId: String) -> [Alarm] {
         var target: Alarm? = nil
         for alarm in alarms {
-            if alarm.createTime == alarmId {
+            if alarm.id == alarmId {
                 target = alarm
                 break
             }
@@ -125,7 +135,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var targetIndex: Int? = nil
         for item in alarms.enumerated() {
             let _alarm = item.element
-            if _alarm.createTime == alarm.createTime {
+            if _alarm.id == alarm.id {
                 targetIndex = item.offset
                 break
             }
@@ -153,6 +163,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("\(error)")
                 }
         }
+    }
+}
+
+class NotificationHandler: NSObject, UNUserNotificationCenterDelegate {
+    //在应用内展示通知
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                didReceive response: UNNotificationResponse,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler:
+        @escaping (UNNotificationPresentationOptions) -> Void) {
+//        print(response.notification.request.content.title)
+//        print(response.notification.request.content.body)
+//        //获取通知附加数据
+//        let userInfo = response.notification.request.content.userInfo
+//        print(userInfo)
+        //完成了工作
+        completionHandler([.alert, .sound])
+        
+        // 如果不想显示某个通知，可以直接用空 options 调用 completionHandler:
+        // completionHandler([])
     }
 }
 

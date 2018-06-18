@@ -7,18 +7,67 @@
 //
 
 import UIKit
+import UserNotifications
 
 class AlarmsViewController: UITableViewController {
     var alarms: [Alarm] = []
     var appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         print("AlarmsViewController did load")
+        getNotificationAuthorization()
         super.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("AlarmsViewController viewDidAppear")
         updateAlarmsData()
+    }
+    
+    func getNotificationAuthorization() {
+        UNUserNotificationCenter.current().getNotificationSettings {
+            settings in
+            switch settings.authorizationStatus {
+            case .authorized:
+                return
+            case .notDetermined:
+                //请求授权
+                UNUserNotificationCenter.current()
+                    .requestAuthorization(options: [.alert, .sound, .badge]) {
+                        (accepted, error) in
+                        if !accepted {
+                            print("用户不允许消息通知。")
+                        }
+                }
+            case .denied:
+                DispatchQueue.main.async(execute: { () -> Void in
+                    let alertController = UIAlertController(title: "消息推送已关闭",
+                                                            message: "想要及时获取消息。点击“设置”，开启通知。",
+                                                            preferredStyle: .alert)
+                    
+                    let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)
+                    
+                    let settingsAction = UIAlertAction(title:"设置", style: .default, handler: {
+                        (action) -> Void in
+                        let url = URL(string: UIApplicationOpenSettingsURLString)
+                        if let url = url, UIApplication.shared.canOpenURL(url) {
+                            if #available(iOS 10, *) {
+                                UIApplication.shared.open(url, options: [:],
+                                                          completionHandler: {
+                                                            (success) in
+                                })
+                            } else {
+                                UIApplication.shared.openURL(url)
+                            }
+                        }
+                    })
+                    
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(settingsAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                })
+            }
+        }
     }
     
     func updateAlarmsData() {

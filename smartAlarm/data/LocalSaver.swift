@@ -9,13 +9,13 @@
 import Foundation
 
 class LocalSaver {
-    static func getLocalFile() -> String {
+    static func getLocalFile(fileName: String) -> String {
         // 1、获得沙盒的根路径
         let home = NSHomeDirectory() as NSString
         // 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
         let docPath = home.appendingPathComponent("Documents") as NSString
         // 3、获取文本文件路径
-        let filePath = docPath.appendingPathComponent("data.plist")
+        let filePath = docPath.appendingPathComponent("alarm.plist")
         return filePath
     }
     
@@ -31,16 +31,46 @@ class LocalSaver {
         return targetItem
     }
     
+    static func saveFestivals(jsonData: [Dictionary<String, String>]) {
+        print("localsaver saveFestivals")
+        let filePath = getLocalFile(fileName: "festivals.plist")
+        let dataSource = NSArray(array: jsonData)
+        dataSource.write(toFile: filePath, atomically: true)
+    }
+    
+    static func saveWorkDays(jsonData: [Dictionary<String, String>]) {
+        print("localsaver saveWorkDays")
+        let filePath = getLocalFile(fileName: "workdays.plist")
+        let dataSource = NSArray(array: jsonData)
+        dataSource.write(toFile: filePath, atomically: true)
+    }
+    
+    static func getFestivals() -> [Dictionary<String, String>] {
+        print("localsaver getFestivals")
+        let filePath = getLocalFile(fileName: "festivals.plist")
+        var dataSource = NSArray(contentsOfFile: filePath)
+        dataSource = dataSource == nil ? [] : dataSource
+        return dataSource as! [Dictionary<String, String>]
+    }
+    
+    static func getWorkDays() -> [Dictionary<String, String>] {
+        print("localsaver getWorkDays")
+        let filePath = getLocalFile(fileName: "workdays.plist")
+        var dataSource = NSArray(contentsOfFile: filePath)
+        dataSource = dataSource == nil ? [] : dataSource
+        return dataSource as! [Dictionary<String, String>]
+    }
+    
     static func saveItems(jsonData: [Dictionary<String, Any>]) {
         print("localsaver saveItems")
-        let filePath = getLocalFile()
+        let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSArray(array: jsonData)
         dataSource.write(toFile: filePath, atomically: true)
     }
     
     static func addItem(jsonData: Dictionary<String, Any>) {
         print("localsaver addItem")
-        let filePath = getLocalFile()
+        let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         dataSource?.add(jsonData)
         dataSource?.write(toFile: filePath, atomically: true)
@@ -48,7 +78,7 @@ class LocalSaver {
     
     static func editItem(jsonData: Dictionary<String, Any>) {
         print("localsaver editItem")
-        let filePath = getLocalFile()
+        let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         let target = findObjectInArray(array: dataSource as! [Dictionary<String, Any>], contains: jsonData)
         print("editItem", target as Any, dataSource?.index(of: target as Any) as Any)
@@ -60,7 +90,7 @@ class LocalSaver {
     
     static func removeItem(jsonData: Dictionary<String, Any>) {
         print("localsaver removeItem")
-        let filePath = getLocalFile()
+        let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         let target = findObjectInArray(array: dataSource as! [Dictionary<String, Any>], contains: jsonData)
         if target != nil {
@@ -71,7 +101,7 @@ class LocalSaver {
     
     static func clearItems() {
         print("localsaver clearItems")
-        let filePath = getLocalFile()
+        let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSMutableArray(contentsOfFile: filePath)
         dataSource?.removeAllObjects()
         dataSource?.write(toFile: filePath, atomically: true)
@@ -79,8 +109,9 @@ class LocalSaver {
     
     static func getItems() -> [Dictionary<String, Any>] {
         print("localsaver getItems")
-        let filePath = getLocalFile()
-        let dataSource = NSArray(contentsOfFile: filePath)
+        let filePath = getLocalFile(fileName: "alarm.plist")
+        var dataSource = NSArray(contentsOfFile: filePath)
+        dataSource = dataSource == nil ? [] : dataSource
         return dataSource as! [Dictionary<String, Any>]
     }
 }

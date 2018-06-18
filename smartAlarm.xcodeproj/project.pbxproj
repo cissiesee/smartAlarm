@@ -28,6 +28,13 @@
 		36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B3E26B209AD3E400FBDDB6 /* WebKit.framework */; };
 		36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */; };
 		36CC8D3D20AE94AA000D41E7 /* constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CC8D3C20AE94AA000D41E7 /* constant.swift */; };
+		36D5150E20CBF34E00C2F385 /* AlarmRepeatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5150D20CBF34E00C2F385 /* AlarmRepeatCell.swift */; };
+		36D5151220D0E08000C2F385 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151120D0E08000C2F385 /* Utils.swift */; };
+		36D5151520D501E900C2F385 /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151420D501E900C2F385 /* RecordManager.swift */; };
+		36D5151720D50C7900C2F385 /* AlarmSoundLocalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151620D50C7900C2F385 /* AlarmSoundLocalView.swift */; };
+		36D5151920D50C9100C2F385 /* AlarmSoundOnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */; };
+		36D5151B20D6445900C2F385 /* AlarmSoundRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */; };
+		36D5151D20D78BA300C2F385 /* AlarmSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */; };
 		7CBA963AB12DB7C321C76111 /* Pods_smartAlarm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +84,13 @@
 		36B3E26B209AD3E400FBDDB6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailCell.swift; sourceTree = "<group>"; };
 		36CC8D3C20AE94AA000D41E7 /* constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constant.swift; sourceTree = "<group>"; };
+		36D5150D20CBF34E00C2F385 /* AlarmRepeatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepeatCell.swift; sourceTree = "<group>"; };
+		36D5151120D0E08000C2F385 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		36D5151420D501E900C2F385 /* RecordManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
+		36D5151620D50C7900C2F385 /* AlarmSoundLocalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundLocalView.swift; sourceTree = "<group>"; };
+		36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundOnlineView.swift; sourceTree = "<group>"; };
+		36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundRecordView.swift; sourceTree = "<group>"; };
+		36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundCell.swift; sourceTree = "<group>"; };
 		6B70FEC8EF3D04940950CC12 /* Pods-smartAlarm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.debug.xcconfig"; sourceTree = "<group>"; };
 		E07EF6CAFC6AC8878917C9FE /* Pods-smartAlarm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.release.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +147,7 @@
 		3640CE7C2094104300520D06 /* smartAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				36D5151320D0E08A00C2F385 /* utils */,
 				36B3E267209A99FF00FBDDB6 /* data */,
 				36B3E266209A99D600FBDDB6 /* prototype */,
 				36B3E265209A98CF00FBDDB6 /* components */,
@@ -174,6 +189,9 @@
 				3658AC7F20B1A8EB00BAA20E /* AlarmRepeatEditController.swift */,
 				3658AC8120B3AE1E00BAA20E /* AlarmSoundEditController.swift */,
 				3658AC8320B3AE4100BAA20E /* AlarmInfoEditController.swift */,
+				36D5151620D50C7900C2F385 /* AlarmSoundLocalView.swift */,
+				36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */,
+				36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -183,6 +201,8 @@
 			children = (
 				3640CEAB2094117100520D06 /* AlarmCell.swift */,
 				36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */,
+				36D5150D20CBF34E00C2F385 /* AlarmRepeatCell.swift */,
+				36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -213,6 +233,15 @@
 				274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		36D5151320D0E08A00C2F385 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				36D5151120D0E08000C2F385 /* Utils.swift */,
+				36D5151420D501E900C2F385 /* RecordManager.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		4CBCCA474C64EF383D36CE80 /* Pods */ = {
@@ -399,6 +428,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36D5151520D501E900C2F385 /* RecordManager.swift in Sources */,
 				3640CE802094104300520D06 /* ViewController.swift in Sources */,
 				36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */,
 				36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */,
@@ -408,12 +438,18 @@
 				36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */,
 				362BAA0220B93F8E00C3CE7D /* LocalSaver.swift in Sources */,
 				3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */,
+				36D5151220D0E08000C2F385 /* Utils.swift in Sources */,
 				3658AC8020B1A8EB00BAA20E /* AlarmRepeatEditController.swift in Sources */,
 				3658AC8220B3AE1E00BAA20E /* AlarmSoundEditController.swift in Sources */,
 				3640CEAE2094119000520D06 /* Alarm.swift in Sources */,
 				3640CEB02094121300520D06 /* AlarmsViewController.swift in Sources */,
+				36D5151720D50C7900C2F385 /* AlarmSoundLocalView.swift in Sources */,
 				36CC8D3D20AE94AA000D41E7 /* constant.swift in Sources */,
+				36D5151D20D78BA300C2F385 /* AlarmSoundCell.swift in Sources */,
+				36D5150E20CBF34E00C2F385 /* AlarmRepeatCell.swift in Sources */,
 				3658AC8420B3AE4100BAA20E /* AlarmInfoEditController.swift in Sources */,
+				36D5151B20D6445900C2F385 /* AlarmSoundRecordView.swift in Sources */,
+				36D5151920D50C9100C2F385 /* AlarmSoundOnlineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

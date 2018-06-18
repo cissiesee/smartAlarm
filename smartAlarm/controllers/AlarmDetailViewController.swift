@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import UserNotifications
 
 class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var detailTable: UITableView!
@@ -17,7 +18,7 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     var type: String = "add"
     var dateFormatter = "HH:mm"
     var alarm: Alarm = Alarm(
-        createTime: "",
+        id: "",
         time: "",
         info: "闹钟",
         isOn: true,
@@ -35,7 +36,7 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         }
         detailContents = [alarm.details.repeatType, alarm.info, alarm.details.sound]
         /// 通知名
-        let notificationName = "XMNotification"
+        let notificationName = "RepeatSelectNotification"
         /// 自定义通知
         NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
@@ -47,8 +48,11 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @objc private func notificationAction(noti: Notification) {
-        alarm.details.repeatType = noti.object as! String
+        let data = noti.object as! Dictionary<String, String>
+        alarm.details.repeatType = data["selectIndex"]!
+        alarm.info = "\(data["selectIndex"]!),\(data["selectedInfo"]!)"
         detailContents[0] = alarm.details.repeatType
+        detailContents[1] = alarm.info
         detailTable.reloadData()
     }
     
@@ -88,6 +92,7 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         let dformatter = DateFormatter()
         dformatter.dateFormat = dateFormatter
         let date = dformatter.date(from: time)
+        print("current alarm date", date as Any)
         timeSelector.date = date!
     }
     
@@ -108,17 +113,18 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func deleteAlarm() {
-        appDelegate.removeAlarm(alarmId: alarm.createTime)
+        appDelegate.removeAlarm(alarmId: alarm.id)
+        deleteUserNoti(id: alarm.id)
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func addOrEditAlarm() {
         print("addOrEditAlarm")
         
-        let date = NSDate()
+        let date = Date()
         
         if type == "add" {
-            alarm.createTime = "\(Int(date.timeIntervalSince1970 * 1000))"
+            alarm.id = "type\(alarm.details.repeatType)_\(Int(date.timeIntervalSince1970 * 1000))"
         }
         
         alarm.time = getSelectorTime()
@@ -128,8 +134,142 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         } else if type == "edit" {
             appDelegate.editAlarm(alarm: alarm)
         }
-        
+        scheduleUserNotication(alarm: alarm)
         dismiss(animated: true, completion: nil)
+    }
+    
+    func alarmWorkDayIn2018(today: Date, alarm: Alarm, content: UNMutableNotificationContent, i: Int) {
+        let index = i + 1
+        let oneDay = TimeInterval(60 * 60 * 24)
+        let requestIdentifier = "\(alarm.id)_\(i)"
+        let todayDetail = Calendar.current.dateComponents([.year, .month, .day, .weekday, .hour, .minute], from: today)
+        var components: DateComponents = DateComponents()
+        components.hour = todayDetail.hour
+        components.minute = todayDetail.minute
+        
+        if (todayDetail.year == 2018) {
+//            print("weekday", todayDetail.weekday as Any)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let datestr = dateFormatter.string(from: today)
+            let festivalDays: [Dictionary<String, String>] = LocalSaver.getFestivals()
+            let workdays: [Dictionary<String, String>] = LocalSaver.getWorkDays()
+            var ifAdd = false
+            if todayDetail.weekday == 7 || todayDetail.weekday == 1 { // 周末判断是否是调休日
+                let isWorkday = workdays.index { (day) -> Bool in
+                    return datestr == day["date"]
+                }
+                if isWorkday != nil {
+                    ifAdd = true
+                }
+            } else { // 工作日判断是否是假日
+                let isFestival = festivalDays.index { (day) -> Bool in
+                    return datestr == day["date"]
+                }
+                if isFestival != nil {
+                    ifAdd = true
+                }
+            }
+            
+            if ifAdd {
+                components.day = todayDetail.day
+                addOrEditUserNoti(id: requestIdentifier, dateMatching: components, repeats: false, content: content)
+            }
+            
+            let newDay = Date(timeIntervalSinceNow: oneDay)
+            alarmWorkDayIn2018(today: newDay, alarm: alarm, content: content, i: index)
+        } else {
+            return
+        }
+    }
+    
+    func scheduleUserNotication(alarm: Alarm) {
+        //设置推送内容
+        let content = UNMutableNotificationContent()
+        content.title = "亲,来闹你了哦--亲爱的闹钟"
+        content.body = alarm.info
+        
+        var components:DateComponents = DateComponents()
+        let timeDetail = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: timeSelector.date)
+        
+        if alarm.details.repeatType == "0" { // 每个工作日单独处理
+            if LocalSaver.getFestivals().count > 0 {
+                alarmWorkDayIn2018(today: Date(), alarm: alarm, content: content, i: 0)
+            } else {
+                Alamofire.request(host + "getFestivals", method: .get, encoding: JSONEncoding.default)
+                    .responseJSON { (response) in
+                        switch response.result {
+                        case .success(let json):
+                            print("\(json)")
+                            let dict = json as! Dictionary<String, Any>
+                            if dict["code"] as! String == "0" {
+                                print("get festivals success")
+                                let data = dict["data"] as! Dictionary<String, Any>
+                                let festivalDays = data["festivalDays"] as! [Dictionary<String, String>]
+                                let workDays = data["workDays"] as! [Dictionary<String, String>]
+                                LocalSaver.saveFestivals(jsonData: festivalDays)
+                                LocalSaver.saveWorkDays(jsonData: workDays)
+                                self.alarmWorkDayIn2018(today: Date(), alarm: alarm, content: content, i: 0)
+                            }
+                        case .failure(let error):
+                            print("\(error)")
+                        }
+                }
+            }
+        } else {
+            switch alarm.details.repeatType {
+            // 每天
+            case "1":
+                components.hour = timeDetail.hour
+                components.minute = timeDetail.minute
+            // 每周
+            case "2":
+                components.weekday = timeDetail.day
+            // 每月
+            case "3":
+                components.month = timeDetail.month
+            // 每年
+            case "4":
+                components.year = timeDetail.year
+                break
+            default:
+                print(alarm.details.repeatType)
+            }
+            
+            addOrEditUserNoti(id: alarm.id, dateMatching: components, repeats: true, content: content)
+        }
+    }
+    
+    func addOrEditUserNoti(id: String, dateMatching: DateComponents, repeats: Bool, content: UNMutableNotificationContent) {
+        //设置通知触发器
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateMatching, repeats: repeats)
+        //设置请求标识符
+        
+        //设置一个通知请求
+        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+        
+        //将通知请求添加到发送中心
+        UNUserNotificationCenter.current().add(request) { error in
+            if error == nil {
+                print("Calendar Notification scheduled: \(id)")
+            }
+        }
+    }
+    
+    func deleteUserNoti(id: String) {
+        let predicate = NSPredicate(format: "SELF MATCHES %@", "^type0_.*")
+        if predicate.evaluate(with: id) { // 工作日
+            UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+                let predicateId = NSPredicate(format: "SELF MATCHES %@", "^\(id)_.*")
+                for request in requests {
+                    if predicateId.evaluate(with: request.identifier) {
+                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                    }
+                }
+            }
+        } else {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        }
     }
 
     /*
