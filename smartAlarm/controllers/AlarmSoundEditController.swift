@@ -10,7 +10,7 @@ import UIKit
 
 class AlarmSoundEditController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var soundTable: UITableView!
-    var tableInfo: [Dictionary<String, String>] = [["soundType": "record", "soundTypeName": "录音", "soundContent": ""], ["soundType": "localM", "soundTypeName": "本地音乐", "soundContent": ""], ["soundType": "online", "soundTypeName": "在线乐库", "soundContent": ""]]
+    var tableInfo: [Dictionary<String, String>] = [["soundType": "record", "soundTypeName": "录音", "soundContent": ""], ["soundType": "localM", "soundTypeName": "内置音乐", "soundContent": ""], ["soundType": "online", "soundTypeName": "在线乐库", "soundContent": ""]]
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableInfo.count
     }

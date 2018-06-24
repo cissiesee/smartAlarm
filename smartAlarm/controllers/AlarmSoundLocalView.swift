@@ -9,32 +9,28 @@
 import UIKit
 import MediaPlayer
 
-class AlarmSoundLocalView: UIViewController {
-    @IBOutlet weak var selectAudioBtn: UIButton!
+class AlarmSoundLocalView: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    var list: [String] = []; // 音频媒体列表
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //从ipod库中读出音乐文件
-        let everything = MPMediaQuery()
-        let itemsFromGenericQuery = everything.items
-        for song in itemsFromGenericQuery! {
-            //获取音乐名称
-//            let songTitle = song.value(forProperty: MPMediaItemPropertyTitle)
-//            print("songTitle==\(songTitle!)")
-//            //获取作者名称
-//            let songArt = song.value(forProperty: MPMediaItemPropertyArtist)
-//            print("songArt=\(songArt!)")
-            //获取音乐路径
-            let songUrl = song.value(forProperty: MPMediaItemPropertyAssetURL)
-            print("songUrl==\(songUrl!)")
-        }
-
         // Do any additional setup after loading the view.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmSoundLocalCell", for: indexPath)
+        return cell
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     /*
     // MARK: - Navigation

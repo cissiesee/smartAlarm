@@ -9,11 +9,13 @@
 import UIKit
 
 class AlarmSoundRecordView: UIViewController {
+    @IBOutlet weak var stopRecordBtn: UIButton!
     @IBOutlet weak var recordBtn: UIButton!
     var recordManager = RecordManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        stopRecordBtn.isHidden = true
+        recordBtn.isHidden = false
         // Do any additional setup after loading the view.
     }
 
@@ -23,31 +25,39 @@ class AlarmSoundRecordView: UIViewController {
     }
     
     @IBAction func recordAudio(_ sender: Any) {
-        if recordBtn.titleLabel?.text == "开始录音" {
-            // todo 音波图show
-            recordManager.beginRecord()//开始录音
-            recordBtn.titleLabel?.text = "结束录音"
-        } else {
-            let alertController = UIAlertController(title: "录音确认",
-                                                    message: "亲，确认使用该段录音吗？", preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "放弃", style: .cancel, handler: {
-                action in
-                self.recordManager.cancelRecord()
-            })
-            let okAction = UIAlertAction(title: "使用", style: .default, handler: {
-                action in
-                self.recordManager.stopRecord()
-                self.recordBtn.titleLabel?.text = "开始录音"
-            })
-            alertController.addAction(cancelAction)
-            alertController.addAction(okAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
-        
-        //        recoder_manager.stopRecord()//结束录音
-        //        recoder_manager.play()//播放录制的音频
+        // todo 音波图show
+        recordManager.beginRecord()//开始录音
+        stopRecordBtn.isHidden = false
+        recordBtn.isHidden = true
     }
 
+    @IBAction func stopRecord(_ sender: Any) {
+        self.recordManager.stopRecord()
+        let alertController = UIAlertController(title: "录音确认",
+                                                message: "亲，确认使用该段录音吗？", preferredStyle: .alert)
+        alertController.addTextField {
+            (textField: UITextField!) -> Void in
+            textField.placeholder = "声音名称"
+        }
+        let cancelAction = UIAlertAction(title: "放弃", style: .cancel, handler: {
+            action in
+            self.recordManager.cancelRecord()
+        })
+        let okAction = UIAlertAction(title: "使用", style: .default, handler: {
+            action in
+            self.recordManager.renameAudio(audioName: alertController.textFields![0].text!, successCall: { (name) in
+                print("record successfull")
+                self.recordManager.play(name: name)
+            }, failCall: { (msg) in
+                print("record failed: \(msg)")
+            })
+            self.stopRecordBtn.isHidden = true
+            self.recordBtn.isHidden = false
+        })
+        alertController.addAction(cancelAction)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
