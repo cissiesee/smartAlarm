@@ -41,7 +41,7 @@ class AlarmsViewController: UITableViewController {
             case .denied:
                 DispatchQueue.main.async(execute: { () -> Void in
                     let alertController = UIAlertController(title: "消息推送已关闭",
-                                                            message: "想要及时获取消息。点击“设置”，开启通知。",
+                                                            message: "想要闹钟提醒生效，请点击“设置”，开启通知。",
                                                             preferredStyle: .alert)
                     
                     let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)

@@ -197,66 +197,13 @@
                     <view key="view" contentMode="scaleToFill" id="RZt-Oa-5lZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Iy1-NZ-CDV">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AlarmRepeatCell" rowHeight="45" id="pv9-hw-9fK" customClass="AlarmRepeatCell" customModule="smartAlarm" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="pv9-hw-9fK" id="XP6-31-Huw">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mNs-48-HaT">
-                                                    <rect key="frame" x="15" y="12" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SLp-z4-N1T">
-                                                    <rect key="frame" x="318" y="12" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="mNs-48-HaT" firstAttribute="centerY" secondItem="XP6-31-Huw" secondAttribute="centerY" id="7wc-V3-Ojs"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="SLp-z4-N1T" secondAttribute="trailing" id="LDe-jL-s32"/>
-                                                <constraint firstItem="SLp-z4-N1T" firstAttribute="centerY" secondItem="XP6-31-Huw" secondAttribute="centerY" id="U6L-aq-Hg6"/>
-                                                <constraint firstItem="mNs-48-HaT" firstAttribute="leading" secondItem="XP6-31-Huw" secondAttribute="leadingMargin" id="lRP-8Q-L8b"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="repeatDetailLabel" destination="SLp-z4-N1T" id="JXo-Da-1gj"/>
-                                            <outlet property="repeatTypeLabel" destination="mNs-48-HaT" id="Hul-cL-XjY"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="IU0-Av-5iW" id="i5r-BA-kCe"/>
-                                    <outlet property="delegate" destination="IU0-Av-5iW" id="zkO-lf-q4E"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Iy1-NZ-CDV" firstAttribute="top" secondItem="e9S-w6-pCC" secondAttribute="top" id="29P-6T-RyE"/>
-                            <constraint firstItem="e9S-w6-pCC" firstAttribute="bottom" secondItem="Iy1-NZ-CDV" secondAttribute="bottom" id="Klg-Uf-6rq"/>
-                            <constraint firstItem="Iy1-NZ-CDV" firstAttribute="trailing" secondItem="e9S-w6-pCC" secondAttribute="trailing" id="ZTe-kX-Nvu"/>
-                            <constraint firstItem="Iy1-NZ-CDV" firstAttribute="leading" secondItem="e9S-w6-pCC" secondAttribute="leading" id="pzP-0v-30E"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="e9S-w6-pCC"/>
                     </view>
-                    <connections>
-                        <outlet property="alarmRepeatTable" destination="Iy1-NZ-CDV" id="cDA-Ta-bqW"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gTf-fi-gNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2742" y="-1328"/>
+            <point key="canvasLocation" x="2742" y="-1111"/>
         </scene>
         <!--Alarm Sound Edit Controller-->
         <scene sceneID="C99-e8-l4P">
@@ -326,38 +273,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OoE-PS-f4E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2742" y="69"/>
-        </scene>
-        <!--Alarm Info Edit Controller-->
-        <scene sceneID="Jfj-zy-yTh">
-            <objects>
-                <viewController storyboardIdentifier="AlarmInfoEditController" id="IpS-VQ-ZC4" customClass="AlarmInfoEditController" customModule="smartAlarm" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1rd-Kz-2q7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eAO-VN-m68">
-                                <rect key="frame" x="20" y="40" width="335" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="nXe-QS-aOP"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="eAO-VN-m68" firstAttribute="leading" secondItem="dSV-aH-0n3" secondAttribute="leading" constant="20" id="KPc-kA-nW0"/>
-                            <constraint firstItem="dSV-aH-0n3" firstAttribute="trailing" secondItem="eAO-VN-m68" secondAttribute="trailing" constant="20" id="fYN-AN-jnR"/>
-                            <constraint firstItem="eAO-VN-m68" firstAttribute="top" secondItem="dSV-aH-0n3" secondAttribute="top" constant="20" id="j0A-G7-u9y"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="dSV-aH-0n3"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YVT-oV-4g1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2741.5999999999999" y="-628.33583208395805"/>
+            <point key="canvasLocation" x="2742" y="-337"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="6Fn-ly-4I6">
@@ -550,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3oh-GE-dhU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3548" y="-226"/>
+            <point key="canvasLocation" x="3548" y="-761"/>
         </scene>
         <!--Alarm Sound Online View-->
         <scene sceneID="Otm-AB-2iV">
@@ -581,7 +497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zTZ-Fh-Y5g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3548" y="471"/>
+            <point key="canvasLocation" x="3548" y="-6"/>
         </scene>
         <!--Alarm Sound Record View-->
         <scene sceneID="f7v-Oh-mZP">
@@ -605,7 +521,7 @@
                                 <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="nxq-Yo-v0k" style="IBUITableViewCellStyleDefault" id="zkT-va-O1Q">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AlarmSoundRecordCell" textLabel="nxq-Yo-v0k" style="IBUITableViewCellStyleDefault" id="zkT-va-O1Q" customClass="AlarmSoundRecordCell" customModule="smartAlarm" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zkT-va-O1Q" id="cdJ-9H-oyI">
@@ -623,6 +539,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="udf-ps-NeK" id="iNP-rd-kLC"/>
+                                    <outlet property="delegate" destination="udf-ps-NeK" id="Grt-tU-YBQ"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hRU-PN-CmE">
                                 <rect key="frame" x="10" y="30" width="355" height="50"/>
@@ -652,12 +572,13 @@
                     </view>
                     <connections>
                         <outlet property="recordBtn" destination="pBS-Vq-UdT" id="S29-78-GxX"/>
+                        <outlet property="recordTable" destination="WEX-q6-Ik1" id="oaI-vu-ZO1"/>
                         <outlet property="stopRecordBtn" destination="hRU-PN-CmE" id="75k-Ug-dy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ics-3s-pVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2742" y="785"/>
+            <point key="canvasLocation" x="2742" y="385"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

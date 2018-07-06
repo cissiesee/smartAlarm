@@ -1,16 +1,36 @@
 PODS:
   - Alamofire (4.7.2)
+  - Eureka (4.1.1)
+  - SCLAlertView (0.8)
+  - Spring (1.0.5)
+  - SwiftMessages (4.1.2)
+  - WechatOpenSDK (1.8.2)
 
 DEPENDENCIES:
   - Alamofire
+  - Eureka
+  - SCLAlertView
+  - Spring
+  - SwiftMessages
+  - WechatOpenSDK
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - Eureka
+    - SCLAlertView
+    - Spring
+    - SwiftMessages
+    - WechatOpenSDK
 
 SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
+  Spring: 17901566c8ecf3a1327902b940406c64512f9bb1
+  SwiftMessages: d81f48c1f8b6bc1dbebdfffe11226f0344f937ca
+  WechatOpenSDK: 676feec516a11173eafd1fe64b10d27babf28701
 
-PODFILE CHECKSUM: 4aacdd2a921ce5f394c40c49e9c644b0afc8cea2
+PODFILE CHECKSUM: fe5a70a35553816e156b5ed873a565a2e7386069
 
 COCOAPODS: 1.5.0

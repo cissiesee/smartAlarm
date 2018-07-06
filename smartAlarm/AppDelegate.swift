@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+//import WXApi
 import UserNotifications
 
 @UIApplicationMain

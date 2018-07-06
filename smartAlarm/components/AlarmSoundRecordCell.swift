@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlarmRecordCell: UITableViewCell {
+class AlarmSoundRecordCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()

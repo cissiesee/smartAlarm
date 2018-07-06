@@ -11,6 +11,19 @@ import UIKit
 class AlarmSoundEditController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var soundTable: UITableView!
     var tableInfo: [Dictionary<String, String>] = [["soundType": "record", "soundTypeName": "录音", "soundContent": ""], ["soundType": "localM", "soundTypeName": "内置音乐", "soundContent": ""], ["soundType": "online", "soundTypeName": "在线乐库", "soundContent": ""]]
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(recordSelectNotiAction), name: NSNotification.Name(rawValue: "RecordSelectNotification"), object: nil)
+        //        showLocalView()
+        // Do any additional setup after loading the view.
+    }
+    
+    @objc private func recordSelectNotiAction(noti: Notification) {
+        let data = noti.object as! Dictionary<String, String>
+        tableInfo[0]["soundContent"] = data["name"]
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tableInfo.count
     }
@@ -29,10 +42,13 @@ class AlarmSoundEditController: UIViewController, UITableViewDataSource, UITable
         var vc: UIViewController? = nil
         if indexPath.row == 0 {
             vc = storyboard.instantiateViewController(withIdentifier: "AlarmSoundRecordView")
+            vc?.navigationItem.title = "本地录音"
         } else if indexPath.row == 1 {
             vc = storyboard.instantiateViewController(withIdentifier: "AlarmSoundLocalView")
+            vc?.navigationItem.title = "本地铃声"
         } else if indexPath.row == 2 {
             vc = storyboard.instantiateViewController(withIdentifier: "AlarmSoundOnlineView")
+            vc?.navigationItem.title = "在线铃声"
         }
         navigationController?.pushViewController(vc!, animated: true)
     }
@@ -42,11 +58,6 @@ class AlarmSoundEditController: UIViewController, UITableViewDataSource, UITable
 //    @IBOutlet weak var localView: UIView!
 //    @IBOutlet weak var onlineView: UIView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        showLocalView()
-        // Do any additional setup after loading the view.
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

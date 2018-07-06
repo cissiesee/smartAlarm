@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SCLAlertView
 import UserNotifications
 
 class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -24,9 +25,8 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         isOn: true,
         details: AlarmDetail(repeatType: "0", sound: "")
     )
-    var repeatTypes: [String] = ["每个工作日", "每天", "每周", "每月", "每年"]
-    var detailLabels: [String] = ["重复", "描述", "铃声"]
-    var detailContents: [String] = []
+    var repeatTypes: [String] = ["仅一次", "每个工作日", "每天", "每周", "每月", "每年"]
+    var detailLabels: [String] = ["重复", "铃声", "描述"]
     
     override func viewDidLoad() {
         print("AlarmDetailViewController viewDidLoad")
@@ -34,12 +34,11 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         if type == "edit" {
             setSelectorTime(time:alarm.time)
         }
-        detailContents = [alarm.details.repeatType, alarm.info, alarm.details.sound]
-        /// 通知名
-        let notificationName = "RepeatSelectNotification"
-        /// 自定义通知
+//        detailContents = [alarm.details.repeatType, alarm.info, alarm.details.sound]
+        
+        // 自定义通知
         NotificationCenter.default.removeObserver(self)
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: notificationName), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationAction), name: NSNotification.Name(rawValue: "RepeatSelectNotification"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,8 +50,8 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         let data = noti.object as! Dictionary<String, String>
         alarm.details.repeatType = data["selectIndex"]!
         alarm.info = "\(data["selectIndex"]!),\(data["selectedInfo"]!)"
-        detailContents[0] = alarm.details.repeatType
-        detailContents[1] = alarm.info
+//        detailContents[0] = alarm.details.repeatType
+//        detailContents[2] = alarm.info
         detailTable.reloadData()
     }
     
@@ -61,13 +60,20 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("AlarmDetailViewController, cellForRowAt:" + "\(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmDetailCell", for: indexPath) as! AlarmDetailCell
         cell.detailLabel.text = detailLabels[indexPath.row]
-        if indexPath.row == 0 {
-            cell.detailContent.text = repeatTypes[Int(detailContents[indexPath.row])!]
-        } else {
-            cell.detailContent.text = detailContents[indexPath.row]
+        switch indexPath.row {
+        case 0:
+            cell.detailContent.text = repeatTypes[Int(alarm.details.repeatType)!]
+            break;
+        case 1:
+            cell.detailContent.text = alarm.details.sound
+            break;
+        case 2:
+            cell.detailContent.text = alarm.details.sound
+            break;
+        default:
+            print("")
         }
         return cell
     }
@@ -75,17 +81,54 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var vc: UIViewController? = nil
         if indexPath.row == 0 {
-            vc = storyboard.instantiateViewController(withIdentifier: "AlarmRepeatEditController")
-            (vc as! AlarmRepeatEditController).repeatTypes = repeatTypes
-            (vc as! AlarmRepeatEditController).selectIndex = Int(alarm.details.repeatType)!
+            let vc = storyboard.instantiateViewController(withIdentifier: "AlarmRepeatEditController") as! AlarmRepeatEditController
+//            vc.repeatTypes = repeatTypes
+//            vc.selectIndex = Int(alarm.details.repeatType)!
+            vc.navigationItem.title = "周期设置"
+            navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 1 {
-            vc = storyboard.instantiateViewController(withIdentifier: "AlarmInfoEditController")
+            let vc = storyboard.instantiateViewController(withIdentifier: "AlarmSoundEditController") as! AlarmSoundEditController
+            vc.navigationItem.title = "铃声设置"
+            navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.row == 2 {
-            vc = storyboard.instantiateViewController(withIdentifier: "AlarmSoundEditController")
+            editInfo()
         }
-        navigationController?.pushViewController(vc!, animated: true)
+    }
+    
+    func editInfo() {
+//        let alertController = UIAlertController(title: "请输入闹钟描述",
+//                                                message: "", preferredStyle: .alert)
+//        alertController.addTextField {
+//            (textField: UITextField!) -> Void in
+//            textField.placeholder = "" // todo
+//        }
+//        let cancelAction = UIAlertAction(title: "放弃", style: .cancel, handler: {
+//            action in
+//            print("闹钟描述编辑放弃")
+//        })
+//        let okAction = UIAlertAction(title: "确认", style: .default, handler: {
+//            action in
+//            self.alarm.info = alertController.textFields![0].text!
+//            self.detailContents[2] = self.alarm.info
+//            self.detailTable.reloadData()
+//        })
+//        alertController.addAction(cancelAction)
+//        alertController.addAction(okAction)
+//        self.present(alertController, animated: true, completion: nil)
+        let alert = SCLAlertView(appearance: SCLAlertView.SCLAppearance(
+            showCloseButton: false
+        ))
+        let txt = alert.addTextField("闹钟描述")
+        txt.text = self.alarm.info
+        alert.addButton("确定") {
+            self.alarm.info = txt.text!
+            self.detailTable.reloadData()
+        }
+        alert.addButton("取消") {
+            print("闹钟描述编辑取消")
+        }
+        alert.showEdit("闹钟描述编辑", subTitle: "")
     }
     
     func setSelectorTime(time: String) {
@@ -192,7 +235,11 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         var components:DateComponents = DateComponents()
         let timeDetail = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: timeSelector.date)
         
-        if alarm.details.repeatType == "0" { // 每个工作日单独处理
+        if alarm.details.repeatType == "0" { // 不重复的闹钟
+            components.hour = timeDetail.hour
+            components.minute = timeDetail.minute
+            addOrEditUserNoti(id: alarm.id, dateMatching: components, repeats: false, content: content)
+        } else if alarm.details.repeatType == "1" { // 每个工作日单独处理
             if LocalSaver.getFestivals().count > 0 {
                 alarmWorkDayIn2018(today: Date(), alarm: alarm, content: content, i: 0)
             } else {
@@ -219,17 +266,17 @@ class AlarmDetailViewController: UIViewController, UITableViewDataSource, UITabl
         } else {
             switch alarm.details.repeatType {
             // 每天
-            case "1":
+            case "2":
                 components.hour = timeDetail.hour
                 components.minute = timeDetail.minute
             // 每周
-            case "2":
+            case "3":
                 components.weekday = timeDetail.day
             // 每月
-            case "3":
+            case "4":
                 components.month = timeDetail.month
             // 每年
-            case "4":
+            case "5":
                 components.year = timeDetail.year
                 break
             default:

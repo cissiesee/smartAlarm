@@ -35,7 +35,12 @@
 		36D5151920D50C9100C2F385 /* AlarmSoundOnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */; };
 		36D5151B20D6445900C2F385 /* AlarmSoundRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */; };
 		36D5151D20D78BA300C2F385 /* AlarmSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */; };
-		36E5681320DFA4B400E3C6D5 /* AlarmRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E5681220DFA4B400E3C6D5 /* AlarmRecordCell.swift */; };
+		36E39F4620EF17BC009A9815 /* AlarmRepeatEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */; };
+		36E5681320DFA4B400E3C6D5 /* AlarmSoundRecordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E5681220DFA4B400E3C6D5 /* AlarmSoundRecordCell.swift */; };
+		36E5681620E7AB1400E3C6D5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E5681520E7AB1400E3C6D5 /* SystemConfiguration.framework */; };
+		36E5681820E7AB3D00E3C6D5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E5681720E7AB3D00E3C6D5 /* libz.tbd */; };
+		36E5681A20E7AB5400E3C6D5 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E5681920E7AB5400E3C6D5 /* libsqlite3.0.tbd */; };
+		36E5681C20E7AB6E00E3C6D5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E5681B20E7AB6E00E3C6D5 /* libc++.tbd */; };
 		7CBA963AB12DB7C321C76111 /* Pods_smartAlarm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */; };
 /* End PBXBuildFile section */
 
@@ -92,7 +97,13 @@
 		36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundOnlineView.swift; sourceTree = "<group>"; };
 		36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundRecordView.swift; sourceTree = "<group>"; };
 		36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundCell.swift; sourceTree = "<group>"; };
-		36E5681220DFA4B400E3C6D5 /* AlarmRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRecordCell.swift; sourceTree = "<group>"; };
+		36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepeatEditViewController.swift; sourceTree = "<group>"; };
+		36E5681220DFA4B400E3C6D5 /* AlarmSoundRecordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundRecordCell.swift; sourceTree = "<group>"; };
+		36E5681420E7A9AF00E3C6D5 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
+		36E5681520E7AB1400E3C6D5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		36E5681720E7AB3D00E3C6D5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		36E5681920E7AB5400E3C6D5 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		36E5681B20E7AB6E00E3C6D5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		6B70FEC8EF3D04940950CC12 /* Pods-smartAlarm.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.debug.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.debug.xcconfig"; sourceTree = "<group>"; };
 		E07EF6CAFC6AC8878917C9FE /* Pods-smartAlarm.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartAlarm.release.xcconfig"; path = "Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,6 +113,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36E5681C20E7AB6E00E3C6D5 /* libc++.tbd in Frameworks */,
+				36E5681A20E7AB5400E3C6D5 /* libsqlite3.0.tbd in Frameworks */,
+				36E5681820E7AB3D00E3C6D5 /* libz.tbd in Frameworks */,
+				36E5681620E7AB1400E3C6D5 /* SystemConfiguration.framework in Frameworks */,
 				36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */,
 				7CBA963AB12DB7C321C76111 /* Pods_smartAlarm.framework in Frameworks */,
 			);
@@ -161,6 +176,7 @@
 				3640CE842094104300520D06 /* Assets.xcassets */,
 				3640CE862094104300520D06 /* LaunchScreen.storyboard */,
 				3640CE892094104300520D06 /* Info.plist */,
+				36E5681420E7A9AF00E3C6D5 /* Bridging-Header.h */,
 			);
 			path = smartAlarm;
 			sourceTree = "<group>";
@@ -195,6 +211,7 @@
 				36D5151620D50C7900C2F385 /* AlarmSoundLocalView.swift */,
 				36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */,
 				36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */,
+				36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -206,7 +223,7 @@
 				36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */,
 				36D5150D20CBF34E00C2F385 /* AlarmRepeatCell.swift */,
 				36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */,
-				36E5681220DFA4B400E3C6D5 /* AlarmRecordCell.swift */,
+				36E5681220DFA4B400E3C6D5 /* AlarmSoundRecordCell.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -233,6 +250,10 @@
 		36B3E26A209AD3E300FBDDB6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				36E5681B20E7AB6E00E3C6D5 /* libc++.tbd */,
+				36E5681920E7AB5400E3C6D5 /* libsqlite3.0.tbd */,
+				36E5681720E7AB3D00E3C6D5 /* libz.tbd */,
+				36E5681520E7AB1400E3C6D5 /* SystemConfiguration.framework */,
 				36B3E26B209AD3E400FBDDB6 /* WebKit.framework */,
 				274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */,
 			);
@@ -422,10 +443,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-smartAlarm/Pods-smartAlarm-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
+				"${BUILT_PRODUCTS_DIR}/Spring/Spring.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Spring.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -448,6 +477,7 @@
 				3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */,
 				36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */,
 				362BAA0220B93F8E00C3CE7D /* LocalSaver.swift in Sources */,
+				36E39F4620EF17BC009A9815 /* AlarmRepeatEditViewController.swift in Sources */,
 				3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */,
 				36D5151220D0E08000C2F385 /* Utils.swift in Sources */,
 				3658AC8020B1A8EB00BAA20E /* AlarmRepeatEditController.swift in Sources */,
@@ -460,7 +490,7 @@
 				36D5150E20CBF34E00C2F385 /* AlarmRepeatCell.swift in Sources */,
 				3658AC8420B3AE4100BAA20E /* AlarmInfoEditController.swift in Sources */,
 				36D5151B20D6445900C2F385 /* AlarmSoundRecordView.swift in Sources */,
-				36E5681320DFA4B400E3C6D5 /* AlarmRecordCell.swift in Sources */,
+				36E5681320DFA4B400E3C6D5 /* AlarmSoundRecordCell.swift in Sources */,
 				36D5151920D50C9100C2F385 /* AlarmSoundOnlineView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -635,8 +665,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hzt.smartAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "smartAlarm/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = /Users/;
 			};
 			name = Debug;
 		};
@@ -652,8 +684,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = hzt.smartAlarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "smartAlarm/Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = /Users/;
 			};
 			name = Release;
 		};
