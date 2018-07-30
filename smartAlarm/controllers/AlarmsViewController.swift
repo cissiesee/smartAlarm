@@ -13,9 +13,23 @@ class AlarmsViewController: UITableViewController {
     var alarms: [Alarm] = []
     var appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
+        super.viewDidLoad()
         print("AlarmsViewController did load")
         getNotificationAuthorization()
-        super.viewDidLoad()
+        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(alarmSwitchNotiHandler), name: NSNotification.Name(rawValue: "AlarmSwitchNotification"), object: nil)
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        
+//        var dateComponents = DateComponents()
+//        dateComponents.hour = 13
+//        dateComponents.minute = 03
+//
+//        let content = UNMutableNotificationContent()
+//        content.categoryIdentifier = "myNotificationCategory"
+//        content.title = "亲,来闹你了哦--亲爱的闹钟"
+//        content.body = "闹钟"
+//
+//        NotificationUtils.addOrEditUserNoti(id: "12345", dateMatching: dateComponents, repeats: false, content: content)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +88,26 @@ class AlarmsViewController: UITableViewController {
         alarms = appDelegate.alarms
         tableView.reloadData()
     }
+    
+    @objc private func alarmSwitchNotiHandler(noti: Notification) {
+        let data = noti.object as! Dictionary<String, Any>
+        let isOn = data["isOn"] as! Bool
+        let id = data["id"] as! String
+        let targetAlarms = alarms.filter({ (alarm) -> Bool in
+            return alarm.id == id
+        })
+        if targetAlarms.count > 0 {
+            let targetAlarm = targetAlarms[0]
+            targetAlarm.isOn = isOn
+            if isOn {
+                NotificationUtils.scheduleUserNotication(alarm: targetAlarm, selectDateComponent: DateUtils.getDateComponentsFromAlarm(alarm: targetAlarm))
+            } else {
+                NotificationUtils.deleteUserNoti(id: id)
+            }
+        } else {
+            print("no target found")
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,10 +131,11 @@ class AlarmsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as! AlarmCell
         let alarm = alarms[indexPath.row] as Alarm
         cell.timeLabel.text = alarm.time
-        cell.infoLabel.text = alarm.info
+        cell.alarmId = alarm.id
+        cell.repeatLabel.text = ""
+        cell.infoLabel.text = alarm.details.repeatInfo
         cell.enableSwitch.isOn = alarm.isOn
-        cell.handleSwitch()
-
+        cell.changeColor()
         return cell
     }
     

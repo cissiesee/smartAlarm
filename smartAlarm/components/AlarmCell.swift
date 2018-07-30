@@ -11,11 +11,15 @@ import UIKit
 class AlarmCell: UITableViewCell {
     
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var repeatLabel: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var enableSwitch: UISwitch!
     
+    var alarmId = ""
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        changeColor()
         // Initialization code
     }
     
@@ -24,14 +28,19 @@ class AlarmCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func handleSwitch() {
+    func changeColor() {
         if (enableSwitch.isOn) {
             timeLabel.textColor = UIColor.black
-            infoLabel.textColor = UIColor.black
+            //            infoLabel.textColor = UIColor.black
         } else {
             timeLabel.textColor = UIColor.lightGray
-            infoLabel.textColor = UIColor.lightGray
+            //            infoLabel.textColor = UIColor.lightGray
         }
+    }
+    
+    @IBAction func handleSwitch() {
+        changeColor()
+        NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "AlarmSwitchNotification"), object: ["id": alarmId, "isOn": enableSwitch.isOn])
     }
     
 }

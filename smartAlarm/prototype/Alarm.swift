@@ -13,13 +13,15 @@ class Alarm: NSObject {
     var time: String
     var info: String
     var isOn: Bool
+    var important: Int
     var details: AlarmDetail
     
-    init(id: String, time: String, info: String, isOn: Bool, details: AlarmDetail) {
+    init(id: String, time: String, info: String, isOn: Bool, important: Int, details: AlarmDetail) {
         self.id = id
         self.time = time
         self.info = info
         self.isOn = isOn
+        self.important = important
         self.details = details
         super.init()
     }

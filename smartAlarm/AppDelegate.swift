@@ -24,8 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
 //        application.registerUserNotificationSettings(notificationSettings)
         
+        // 注册category
+//        registerNotificationCategory()
         
-        //设置通知代理
+        // 设置通知代理
         UNUserNotificationCenter.current().delegate = notificationHandler
         
         //获取本地存储的闹铃数据
@@ -33,6 +35,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    
+    //注册一个category
+//    private func registerNotificationCategory() {
+//        let newsCategory: UNNotificationCategory = {
+//            //创建输入文本的action
+//            let inputAction = UNTextInputNotificationAction(
+//                identifier: NotificationCategoryAction.comment.rawValue,
+//                title: "评论",
+//                options: [.foreground],
+//                textInputButtonTitle: "发送",
+//                textInputPlaceholder: "在这里留下你想说的话...")
+//
+//            //创建普通的按钮action
+//            let likeAction = UNNotificationAction(
+//                identifier: NotificationCategoryAction.like.rawValue,
+//                title: "点个赞",
+//                options: [.foreground])
+//
+//            //创建普通的按钮action
+//            let cancelAction = UNNotificationAction(
+//                identifier: NotificationCategoryAction.cancel.rawValue,
+//                title: "取消",
+//                options: [.destructive])
+//
+//            //创建category
+//            return UNNotificationCategory(identifier: NotificationCategory.news.rawValue,
+//                                          actions: [inputAction, likeAction, cancelAction],
+//                                          intentIdentifiers: [], options: [.customDismissAction])
+//        }()
+//
+//        //把category添加到通知中心
+//        UNUserNotificationCenter.current().setNotificationCategories([newsCategory])
+//    }
     
 //    func application(_ application: UIApplication, didReceive notification: UNUserNotificationCenter) {
 ////        if let userInfo = notification.userInfo{
@@ -73,13 +108,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func alarmToJson(alarm: Alarm) -> Dictionary<String, Any> {
-        let requestData: [String:Any] = [
+        let requestData: [String: Any] = [
             "id": alarm.id,
             "time": alarm.time,
             "info": alarm.info,
             "isOn": alarm.isOn,
+            "important": alarm.important,
             "detail": [
                 "repeatType": alarm.details.repeatType,
+                "repeatInfo": alarm.details.repeatInfo,
+                "weekday": alarm.details.weekday,
+                "day": alarm.details.day,
+                "month": alarm.details.month,
                 "sound": alarm.details.sound
             ]
         ]
@@ -102,17 +142,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             time: json["time"] as! String,
             info: json["info"] as! String,
             isOn: json["isOn"] as! Bool,
+            important: json["important"] as! Int,
             details: AlarmDetail(
                 repeatType: alarmItemDetail["repeatType"] as! String,
+                repeatInfo: alarmItemDetail["repeatInfo"] as! String,
+                weekday: alarmItemDetail["weekday"] as! String,
+                day: alarmItemDetail["day"] as! String,
+                month: alarmItemDetail["month"] as! String,
                 sound: alarmItemDetail["sound"] as! String
             )
         )
     }
     
-    func removeAlarm(alarmId: String) -> [Alarm] {
+    func removeAlarm(id: String) -> [Alarm] {
         var target: Alarm? = nil
         for alarm in alarms {
-            if alarm.id == alarmId {
+            if alarm.id == id {
                 target = alarm
                 break
             }
@@ -149,6 +194,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return alarms
     }
     
+    func getAlarm(id: String) -> Alarm? {
+        print("getAlarm, id: ", id)
+        var targetIndex: Int? = nil
+        var targetAlarm: Alarm? = nil
+        for item in alarms.enumerated() {
+            let _alarm = item.element
+            if _alarm.id == id {
+                targetIndex = item.offset
+                break
+            }
+        }
+        if targetIndex != nil {
+            targetAlarm = alarms[targetIndex!]
+        }
+        
+        return targetAlarm
+    }
+    
     func updateAlarmsToServer() {
         print("updateAlarmsToServer")
         Alamofire.request(host + "updateAlarms", method: .post, parameters: ["list": alarmsToJsonList(alarms: alarms)], encoding: JSONEncoding.default)
@@ -164,26 +227,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     print("\(error)")
                 }
         }
-    }
-}
-
-class NotificationHandler: NSObject, UNUserNotificationCenterDelegate {
-    //在应用内展示通知
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                didReceive response: UNNotificationResponse,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler:
-        @escaping (UNNotificationPresentationOptions) -> Void) {
-//        print(response.notification.request.content.title)
-//        print(response.notification.request.content.body)
-//        //获取通知附加数据
-//        let userInfo = response.notification.request.content.userInfo
-//        print(userInfo)
-        //完成了工作
-        completionHandler([.alert, .sound])
-        
-        // 如果不想显示某个通知，可以直接用空 options 调用 completionHandler:
-        // completionHandler([])
     }
 }
 

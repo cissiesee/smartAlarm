@@ -62,7 +62,7 @@ class LocalSaver {
     }
     
     static func saveItems(jsonData: [Dictionary<String, Any>]) {
-        print("localsaver saveItems")
+        print("localsaver saveItems", jsonData)
         let filePath = getLocalFile(fileName: "alarm.plist")
         let dataSource = NSArray(array: jsonData)
         dataSource.write(toFile: filePath, atomically: true)

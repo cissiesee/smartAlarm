@@ -10,11 +10,19 @@ import UIKit
 
 class AlarmDetail: NSObject {
     var repeatType: String
+    var repeatInfo: String
     var sound: String
+    var weekday: String
+    var day: String
+    var month: String
     
-    init(repeatType: String, sound: String) {
+    init(repeatType: String, repeatInfo: String, weekday: String, day: String, month: String, sound: String) {
         self.repeatType = repeatType
+        self.repeatInfo = repeatInfo
         self.sound = sound
+        self.weekday = weekday
+        self.day = day
+        self.month = month
         super.init()
     }
 }

@@ -8,10 +8,20 @@ target 'smartAlarm' do
 pod 'Alamofire'
 
 # 弹窗
-pod 'SCLAlertView'
+# pod 'SCLAlertView'
 
 # 表格
 pod 'Eureka'
+
+# 弹窗
+pod 'XLActionController'
+# Uncomment depending on the examples that you want to install
+#pod 'XLActionController/Periscope'
+#pod 'XLActionController/Skype'
+#pod 'XLActionController/Spotify'
+pod 'XLActionController/Tweetbot'
+pod 'XLActionController/Twitter'
+#pod 'XLActionController/Youtube'
 
 # 动画
 pod 'Spring'
