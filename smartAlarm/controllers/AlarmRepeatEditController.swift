@@ -11,12 +11,12 @@ import Eureka
 
 class AlarmRepeatEditController: FormViewController {
     var repeatTypes: [String] = []
-    var sectionTags: [String] = ["sectionOnce", "sectionWorkDay", "sectionDay", "sectionWeek", "sectionMonth", "sectionYear"]
-    var switchTags: [String] = ["switchOnce", "switchRowWorkDay", "switchRowDay", "switchRowWeek", "switchRowMonth", "switchRowYear"]
-    var selectIndex = -1
-    var month: String = ""
-    var day: String = ""
-    var weekday: String = ""
+    var sectionTags: [String] = ["sectionOnce", "sectionWorkDay", "sectionDay", "sectionWeek", "sectionMonth", "sectionYear", "sectionTrade"]
+    var switchTags: [String] = ["switchOnce", "switchRowWorkDay", "switchRowDay", "switchRowWeek", "switchRowMonth", "switchRowYear", "switchRowTrade"]
+    var selectIndex: Int? = nil
+    var month: Int? = nil
+    var day: Int? = nil
+    var weekday: Int? = nil
 //    var selectDate: Date = Date()
 //    var selectedDayForWeek = ""
 //    var selectedDayForMonth = ""
@@ -28,8 +28,7 @@ class AlarmRepeatEditController: FormViewController {
 //        setDefaultDayFromDate(date: selectDate)
         // todo monthdaylist init
         var sectionArr: [Section] = []
-        for repeatType in repeatTypes {
-            let index = repeatTypes.index(of: repeatType)!
+        for (index, repeatType) in repeatTypes.enumerated() {
             let section = Section()
             section.append(SwitchRow(switchTags[index]){
                 $0.title = repeatTypes[index]
@@ -42,7 +41,7 @@ class AlarmRepeatEditController: FormViewController {
                     $0.hidden = "$switchRowWeek != true"
                     $0.title = "日期"
                     $0.options = DateUtils.getWeekdayList()
-                    $0.value = DateUtils.getWeekdayFromSysWeekday(sysWeekday: weekday == "" ? currentDateComponents.weekday! : Int(weekday)!)
+                    $0.value = DateUtils.getWeekdayFromSysWeekday(sysWeekday: weekday == nil ? currentDateComponents.weekday! : weekday!)
                 })
                 break
             case 4:
@@ -50,17 +49,17 @@ class AlarmRepeatEditController: FormViewController {
                     $0.hidden = "$switchRowMonth != true"
                     $0.title = "日期"
                     $0.options = DateUtils.getMonthdayList()
-                    $0.value = DateUtils.getMonthDayFromSysMonthDay(sysMonthDay: day == "" ? currentDateComponents.day! : Int(day)!)
+                    $0.value = DateUtils.getMonthDayFromSysMonthDay(sysMonthDay: day == nil ? currentDateComponents.day! : day!)
                 })
                 break
             case 5:
                 section.append(DateRow("dateByYear") {
                     $0.hidden = "$switchRowYear != true"
                     $0.title = "日期"
-                    if month != "" && day != "" {
+                    if month != nil && day != nil {
                         var selectDateComponents = DateComponents()
-                        selectDateComponents.month = Int(month)
-                        selectDateComponents.day = Int(day)
+                        selectDateComponents.month = month
+                        selectDateComponents.day = day
                         selectDateComponents.year = currentDateComponents.year
                         $0.value = Calendar.current.date(from: selectDateComponents) // todo
                     } else {
@@ -87,8 +86,8 @@ class AlarmRepeatEditController: FormViewController {
 //            }
 //        }
         
-        if selectIndex > -1 {
-            let targetSwitchRow = form.rowBy(tag: switchTags[selectIndex]) as! SwitchRow
+        if selectIndex != nil {
+            let targetSwitchRow = form.rowBy(tag: switchTags[selectIndex!]) as! SwitchRow
             targetSwitchRow.value = true
         }
     }
@@ -121,12 +120,12 @@ class AlarmRepeatEditController: FormViewController {
         super.viewWillDisappear(true)
         print(form.values() as Any)
 //        let selectDateComponents = Calendar.current.dateComponents([.year, .month, .hour], from: selectDate)
+        let _selectIndex = selectIndex == nil ? 0 : selectIndex!
         var data: Dictionary<String, Any> = [
-            "selectIndex": "\(selectIndex)"
+            "selectIndex": _selectIndex
         ]
         var repeatDateInfo = ""
-        data["selectIndex"] = "\(selectIndex)"
-        switch selectIndex {
+        switch _selectIndex {
         case 3:
             var dateComponents = DateComponents()
             dateComponents.weekday = DateUtils.getSysWeekdayFromWeekday(weekday: form.values()["dateByWeek"] as! String)
@@ -147,7 +146,7 @@ class AlarmRepeatEditController: FormViewController {
 //            data["selectDateLabel"] = ""
             data["selectDateComponents"] = DateComponents()
         }
-        data["repeatInfo"] = ALARM_REPEAT_TYPES[selectIndex] + (repeatDateInfo == "" ? "" : " \(repeatDateInfo)")
+        data["repeatInfo"] = ALARM_REPEAT_TYPES[_selectIndex] + (repeatDateInfo == "" ? "" : " \(repeatDateInfo)")
         NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "RepeatSelectNotification"), object: data)
     }
     

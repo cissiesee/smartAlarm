@@ -16,13 +16,18 @@ class NotificationUtils {
         let content = UNMutableNotificationContent()
         
         //设置category标识符
-        content.categoryIdentifier = "myNotificationCategory"
+        content.categoryIdentifier = alarm.type
         
-        content.title = "亲,来闹你了哦--亲爱的闹钟"
-        content.body = alarm.info
+//        content.title = "亲，小醒来提醒你了哦"
+        content.title = alarm.time + (alarm.info == "" ? "" : " \(alarm.info)")
+        content.userInfo = [
+            "repeatType": alarm.repeatInfo.repeatType,
+            "repeatTimes": alarm.importantInfo.repeatTimes,
+            "repeatInterval": alarm.importantInfo.repeatInterval
+        ]
         
-        if alarm.details.sound != "" {
-            content.sound = UNNotificationSound(named: "\(alarm.details.sound).caf")
+        if alarm.sound != "" {
+            content.sound = UNNotificationSound(named: "\(alarm.sound).caf")
         }
         
         var components:DateComponents = DateComponents()
@@ -30,11 +35,11 @@ class NotificationUtils {
         
         print("scheduleUserNotication:", timeDetail)
         
-        if alarm.details.repeatType == "0" { // 不重复的闹钟
+        if alarm.repeatInfo.repeatType == 0 { // 不重复的提醒
             components.hour = timeDetail.hour
             components.minute = timeDetail.minute
-            addOrEditUserNoti(id: alarm.id, dateMatching: components, repeats: false, content: content)
-        } else if alarm.details.repeatType == "1" { // 每个工作日单独处理
+            addOrEditUserNoti(id: alarm.id, importantInfo: alarm.importantInfo, dateMatching: components, repeats: false, content: content)
+        } else if alarm.repeatInfo.repeatType == 1 { // 每个工作日单独处理
             if LocalSaver.getFestivals().count > 0 {
                 alarmWorkDayIn2018(today: Date(), alarm: alarm, content: content, i: 0)
             } else {
@@ -59,40 +64,51 @@ class NotificationUtils {
                 }
             }
         } else {
-            switch alarm.details.repeatType {
+            switch alarm.repeatInfo.repeatType {
             // 每天
-            case "2":
+            case 2:
                 components.hour = timeDetail.hour
                 components.minute = timeDetail.minute
                 break
             // 每周
-            case "3":
+            case 3:
                 components.hour = timeDetail.hour
                 components.minute = timeDetail.minute
                 components.weekday = timeDetail.weekday
                 break
             // 每月
-            case "4":
+            case 4:
                 components.hour = timeDetail.hour
                 components.minute = timeDetail.minute
                 components.day = timeDetail.day
                 break
             // 每年
-            case "5":
+            case 5:
                 components.hour = timeDetail.hour
                 components.minute = timeDetail.minute
                 components.day = timeDetail.day
                 components.month = timeDetail.month
                 break
             default:
-                print(alarm.details.repeatType)
+                print(alarm.repeatInfo.repeatType)
             }
             
-            addOrEditUserNoti(id: alarm.id, dateMatching: components, repeats: true, content: content)
+            addOrEditUserNoti(id: alarm.id, importantInfo: alarm.importantInfo, dateMatching: components, repeats: true, content: content)
         }
     }
     
-    static func addOrEditUserNoti(id: String, dateMatching: DateComponents, repeats: Bool, content: UNMutableNotificationContent) {
+    static func addOrEditUserNoti(id: String, importantInfo: AlarmImportantInfo, dateMatching: DateComponents, repeats: Bool, content: UNMutableNotificationContent) {
+        
+//        Alamofire.request("", method: .get, encoding: JSONEncoding.default)
+//            .responseJSON { (response) in
+//
+//        }
+        
+        let tips = "-右滑打开应用结束"
+        
+        if importantInfo.repeatTimes > 1 {
+            content.body = "\(importantInfo.repeatInterval)分钟后将再次提醒，剩余\(importantInfo.repeatTimes - 1)次重复提醒\(tips)"
+        }
         //设置通知触发器
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateMatching, repeats: repeats)
         //设置请求标识符
@@ -106,21 +122,59 @@ class NotificationUtils {
                 print("Calendar Notification scheduled: \(id)")
             }
         }
-    }
-    
-    static func deleteUserNoti(id: String) {
-        let predicate = NSPredicate(format: "SELF MATCHES %@", "^type1_.*")
-        if predicate.evaluate(with: id) { // 工作日
-            UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
-                let predicateId = NSPredicate(format: "SELF MATCHES %@", "^\(id)_.*")
-                for request in requests {
-                    if predicateId.evaluate(with: request.identifier) {
-                        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+        
+        let currentAlarmDate = Calendar.current.date(from: dateMatching)
+        
+        // 重要提醒的重复性设置
+        if importantInfo.repeatTimes > 1 {
+            for i in (1..<importantInfo.repeatTimes) {
+                let repeatId = "\(id)_repeat_\(i)"
+                let repeatContent = content
+                let repeatInterval = TimeInterval(importantInfo.repeatInterval * i * 60)
+                let repeatDate = Date(timeInterval: repeatInterval, since: currentAlarmDate!)
+                var repeatDateComponents = Calendar.current.dateComponents([.minute, .hour], from: repeatDate)
+                
+                if i + 1 < importantInfo.repeatTimes {
+                    repeatContent.body = "\(importantInfo.repeatInterval)分钟后将再次提醒，剩余\(importantInfo.repeatTimes - i - 1)次重复提醒\(tips)"
+                }
+                
+                repeatDateComponents.weekday = dateMatching.weekday
+                repeatDateComponents.day = dateMatching.day
+                repeatDateComponents.month = dateMatching.month
+                
+                repeatDateComponents.year = nil
+                repeatDateComponents.era = nil
+                repeatDateComponents.weekdayOrdinal = nil
+                repeatDateComponents.weekOfYear = nil
+                repeatDateComponents.weekOfMonth = nil
+                repeatDateComponents.yearForWeekOfYear = nil
+                
+                let repeatTrigger = UNCalendarNotificationTrigger(dateMatching: repeatDateComponents, repeats: false)
+                let repeatRequest = UNNotificationRequest(identifier: repeatId, content: content, trigger: repeatTrigger)
+                UNUserNotificationCenter.current().add(repeatRequest) { error in
+                    if error == nil {
+                        print("Calendar Notification scheduled: \(repeatId)")
                     }
                 }
             }
-        } else {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        }
+    }
+    
+    static func deleteUserNoti(id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+        print("delete id:", id)
+        deleteUserNotiOfRepeat(id: id)
+    }
+    
+    static func deleteUserNotiOfRepeat(id: String) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            let predicateId = NSPredicate(format: "SELF MATCHES %@", "^\(id)_repeat.*")
+            for request in requests {
+                if predicateId.evaluate(with: request.identifier) {
+                    print("delete id:", request.identifier)
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [request.identifier])
+                }
+            }
         }
     }
     
@@ -157,7 +211,7 @@ class NotificationUtils {
             
             if ifAdd {
                 components.day = todayDetail.day
-                addOrEditUserNoti(id: requestIdentifier, dateMatching: components, repeats: false, content: content)
+                addOrEditUserNoti(id: requestIdentifier, importantInfo: alarm.importantInfo, dateMatching: components, repeats: false, content: content)
             }
             
             let newDay = Date(timeIntervalSinceNow: oneDay)

@@ -16,6 +16,7 @@ class AlarmDetailCell: UITableViewCell {
     
     var type = "default" // "date"
     let datePicker = UIDatePicker()
+    var dateTmp = Date()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,12 +32,22 @@ class AlarmDetailCell: UITableViewCell {
             detailInfoInput.isHidden = false
             
             let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: 44) )
-            let btnback = UIBarButtonItem(
-                title: "Done",
-                style: UIBarButtonItemStyle.done,
-                target: self,action: #selector(doneClick)
+            toolbar.autoresizingMask = .flexibleWidth
+            let btnCancel = UIBarButtonItem(
+                title: "取消",
+                style: UIBarButtonItemStyle.plain,
+                target: self,
+                action: #selector(cancelDatePicker)
             );
-            toolbar.setItems([btnback], animated: false)
+//            let fixedSpace = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            let btnDone = UIBarButtonItem(
+                title: "确认",
+                style: UIBarButtonItemStyle.done,
+                target: self,
+                action: #selector(doneClick)
+            );
+            toolbar.setItems([btnCancel, flexibleSpace, btnDone], animated: false)
             detailInfoInput.inputAccessoryView = toolbar
             detailInfoInput.textAlignment = .right
             
@@ -51,12 +62,23 @@ class AlarmDetailCell: UITableViewCell {
     }
     
     func selectDate(date: Date) {
+        dateTmp = date
         detailInfoInput.text = DateUtils.formatDate(date: date, formatStr: "HH:mm")
         NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "TimeSelectNotification"), object: ["timeText": detailInfoInput.text])
     }
     
     func selectType() {
         
+    }
+    
+    func callDatePicker() {
+        datePicker.date = dateTmp
+        detailInfoInput.becomeFirstResponder()
+    }
+    
+    @objc func cancelDatePicker() {
+        datePicker.date = dateTmp
+        detailInfoInput.resignFirstResponder()
     }
     
     @objc func doneClick(sender: UIBarButtonItem) {
@@ -68,7 +90,7 @@ class AlarmDetailCell: UITableViewCell {
         default:
             print("")
         }
-        detailInfoInput.resignFirstResponder()
+        cancelDatePicker()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

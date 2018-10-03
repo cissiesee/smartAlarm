@@ -25,7 +25,6 @@ enum NotificationCategoryAction: String {
 class NotificationHandler: NSObject, UNUserNotificationCenterDelegate {
     //在应用内展示通知
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                didReceive response: UNNotificationResponse,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler:
         @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -48,6 +47,27 @@ class NotificationHandler: NSObject, UNUserNotificationCenterDelegate {
         
         // 如果不想显示某个通知，可以直接用空 options 调用 completionHandler:
         // completionHandler([])
+    }
+    
+    //对通知进行响应（用户与通知进行交互时被调用）
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler:
+        @escaping () -> Void) {
+        print(response.notification.request.content.title)
+        print(response.notification.request.content.body)
+        //获取通知附加数据
+        let userInfo = response.notification.request.content.userInfo
+        print(userInfo)
+        
+        if (userInfo["repeatType"] as! Int) == 0 {
+            NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "AlarmSwitchNotification"), object: ["id": response.notification.request.identifier, "isOn": false])
+        } else {
+            NotificationUtils.deleteUserNotiOfRepeat(id: response.notification.request.identifier)
+        }
+        
+        //完成了工作
+        completionHandler()
     }
     
     //处理新闻资讯通知的交互

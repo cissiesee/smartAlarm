@@ -15,7 +15,7 @@ class LocalSaver {
         // 2、获得Documents路径，使用NSString对象的stringByAppendingPathComponent()方法拼接路径
         let docPath = home.appendingPathComponent("Documents") as NSString
         // 3、获取文本文件路径
-        let filePath = docPath.appendingPathComponent("alarm.plist")
+        let filePath = docPath.appendingPathComponent(fileName)
         return filePath
     }
     
@@ -108,10 +108,11 @@ class LocalSaver {
     }
     
     static func getItems() -> [Dictionary<String, Any>] {
-        print("localsaver getItems")
+        print("localsaver getItems::enter")
         let filePath = getLocalFile(fileName: "alarm.plist")
         var dataSource = NSArray(contentsOfFile: filePath)
         dataSource = dataSource == nil ? [] : dataSource
+        print("localsaver getItems::end", dataSource)
         return dataSource as! [Dictionary<String, Any>]
     }
 }

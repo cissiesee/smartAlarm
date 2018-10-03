@@ -16,22 +16,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var alarms: [Alarm] = []
+    var wether = ""
     
     let notificationHandler = NotificationHandler()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+//        Thread.sleep(forTimeInterval: 2)
         // Override point for customization after application launch.
 //        let notificationSettings = UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil)
 //        application.registerUserNotificationSettings(notificationSettings)
         
         // 注册category
 //        registerNotificationCategory()
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let mainViewController = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+//        self.window!.rootViewController = mainViewController
         
         // 设置通知代理
         UNUserNotificationCenter.current().delegate = notificationHandler
         
         //获取本地存储的闹铃数据
         alarms = jsonListToAlarms(jsonList: LocalSaver.getItems())
+        
+        print("get init alarms", alarms)
         
         return true
     }
@@ -110,17 +117,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func alarmToJson(alarm: Alarm) -> Dictionary<String, Any> {
         let requestData: [String: Any] = [
             "id": alarm.id,
+            "type": alarm.type,
+            "subType": alarm.subType,
             "time": alarm.time,
             "info": alarm.info,
             "isOn": alarm.isOn,
-            "important": alarm.important,
-            "detail": [
-                "repeatType": alarm.details.repeatType,
-                "repeatInfo": alarm.details.repeatInfo,
-                "weekday": alarm.details.weekday,
-                "day": alarm.details.day,
-                "month": alarm.details.month,
-                "sound": alarm.details.sound
+            "sound": alarm.sound,
+            "importantInfo": [
+                "level": alarm.importantInfo.level,
+                "repeatTimes": alarm.importantInfo.repeatTimes,
+                "repeatInterval": alarm.importantInfo.repeatInterval
+            ],
+            "repeatInfo": [
+                "repeatType": alarm.repeatInfo.repeatType,
+                "repeatInfo": alarm.repeatInfo.repeatInfo,
+                "weekday": alarm.repeatInfo.weekday == nil ? -1 : alarm.repeatInfo.weekday!,
+                "day": alarm.repeatInfo.day == nil ? -1 : alarm.repeatInfo.day!,
+                "month": alarm.repeatInfo.month == nil ? -1 : alarm.repeatInfo.month!
             ]
         ]
         return requestData
@@ -136,20 +149,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func jsonToAlarm(json: Dictionary<String, Any>) -> Alarm {
-        let alarmItemDetail = json["detail"] as! Dictionary<String,AnyObject>
+        let alarmItemImportantInfo = json["importantInfo"] as! Dictionary<String,AnyObject>
+        let alarmItemRepeatInfo = json["repeatInfo"] as! Dictionary<String,AnyObject>
+        
         return Alarm(
             id: json["id"] as! String,
+            type: json["type"] as! String,
+            subType: json["subType"] as! String,
             time: json["time"] as! String,
             info: json["info"] as! String,
             isOn: json["isOn"] as! Bool,
-            important: json["important"] as! Int,
-            details: AlarmDetail(
-                repeatType: alarmItemDetail["repeatType"] as! String,
-                repeatInfo: alarmItemDetail["repeatInfo"] as! String,
-                weekday: alarmItemDetail["weekday"] as! String,
-                day: alarmItemDetail["day"] as! String,
-                month: alarmItemDetail["month"] as! String,
-                sound: alarmItemDetail["sound"] as! String
+            sound: json["sound"] as! String,
+            importantInfo: AlarmImportantInfo(
+                level: alarmItemImportantInfo["level"] as! Int,
+                repeatTimes: alarmItemImportantInfo["repeatTimes"] as! Int,
+                repeatInterval: alarmItemImportantInfo["repeatInterval"] as! Int
+            ),
+            repeatInfo: AlarmRepeatInfo(
+                repeatType: alarmItemRepeatInfo["repeatType"] as! Int,
+                repeatInfo: alarmItemRepeatInfo["repeatInfo"] as! String,
+                weekday: alarmItemRepeatInfo["weekday"] as! Int == -1 ? nil : alarmItemRepeatInfo["weekday"] as? Int,
+                day: alarmItemRepeatInfo["day"] as! Int == -1 ? nil : alarmItemRepeatInfo["day"] as? Int,
+                month: alarmItemRepeatInfo["month"] as! Int == -1 ? nil : alarmItemRepeatInfo["month"] as? Int
             )
         )
     }

@@ -39,7 +39,7 @@ class AlarmCell: UITableViewCell {
     }
     
     @IBAction func handleSwitch() {
-        changeColor()
+//        changeColor()
         NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "AlarmSwitchNotification"), object: ["id": alarmId, "isOn": enableSwitch.isOn])
     }
     

@@ -10,19 +10,25 @@ import UIKit
 
 class Alarm: NSObject {
     var id: String
+    var type: String
+    var subType: String
     var time: String
     var info: String
     var isOn: Bool
-    var important: Int
-    var details: AlarmDetail
+    var sound: String
+    var importantInfo: AlarmImportantInfo
+    var repeatInfo: AlarmRepeatInfo
     
-    init(id: String, time: String, info: String, isOn: Bool, important: Int, details: AlarmDetail) {
+    init(id: String, type: String, subType: String, time: String, info: String, isOn: Bool, sound: String, importantInfo: AlarmImportantInfo, repeatInfo: AlarmRepeatInfo) {
         self.id = id
+        self.type = type
+        self.subType = subType
         self.time = time
         self.info = info
         self.isOn = isOn
-        self.important = important
-        self.details = details
+        self.sound = sound
+        self.importantInfo = importantInfo
+        self.repeatInfo = repeatInfo
         super.init()
     }
 }

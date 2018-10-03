@@ -12,24 +12,16 @@ import UserNotifications
 class AlarmsViewController: UITableViewController {
     var alarms: [Alarm] = []
     var appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+    var alarmsByGroup = Dictionary<String, [Alarm]>()
+    var sectionHeaders: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("AlarmsViewController did load")
         getNotificationAuthorization()
         NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(alarmSwitchNotiHandler), name: NSNotification.Name(rawValue: "AlarmSwitchNotification"), object: nil)
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
-        
-//        var dateComponents = DateComponents()
-//        dateComponents.hour = 13
-//        dateComponents.minute = 03
-//
-//        let content = UNMutableNotificationContent()
-//        content.categoryIdentifier = "myNotificationCategory"
-//        content.title = "亲,来闹你了哦--亲爱的闹钟"
-//        content.body = "闹钟"
-//
-//        NotificationUtils.addOrEditUserNoti(id: "12345", dateMatching: dateComponents, repeats: false, content: content)
+//        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +29,7 @@ class AlarmsViewController: UITableViewController {
         updateAlarmsData()
     }
     
-    func getNotificationAuthorization() {
+    private func getNotificationAuthorization() {
         UNUserNotificationCenter.current().getNotificationSettings {
             settings in
             switch settings.authorizationStatus {
@@ -58,9 +50,9 @@ class AlarmsViewController: UITableViewController {
                                                             message: "想要闹钟提醒生效，请点击“设置”，开启通知。",
                                                             preferredStyle: .alert)
                     
-                    let cancelAction = UIAlertAction(title:"取消", style: .cancel, handler:nil)
+                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler:nil)
                     
-                    let settingsAction = UIAlertAction(title:"设置", style: .default, handler: {
+                    let settingsAction = UIAlertAction(title: "设置", style: .default, handler: {
                         (action) -> Void in
                         let url = URL(string: UIApplicationOpenSettingsURLString)
                         if let url = url, UIApplication.shared.canOpenURL(url) {
@@ -86,7 +78,22 @@ class AlarmsViewController: UITableViewController {
     
     func updateAlarmsData() {
         alarms = appDelegate.alarms
+        groupAlarmsByType()
         tableView.reloadData()
+    }
+    
+    func groupAlarmsByType() {
+        let types = alarms.map { alarm -> String in
+            return alarm.type
+        }
+        sectionHeaders = types.filterDuplicates({$0})
+        for alarmType in sectionHeaders {
+            let targetAlarms = alarms.filter { item -> Bool in
+                return item.type == alarmType
+            }
+            alarmsByGroup[alarmType] = targetAlarms
+        }
+        print("sectionHeaders and alarmsByGroup", sectionHeaders, alarmsByGroup)
     }
     
     @objc private func alarmSwitchNotiHandler(noti: Notification) {
@@ -99,6 +106,7 @@ class AlarmsViewController: UITableViewController {
         if targetAlarms.count > 0 {
             let targetAlarm = targetAlarms[0]
             targetAlarm.isOn = isOn
+            tableView.reloadData()
             if isOn {
                 NotificationUtils.scheduleUserNotication(alarm: targetAlarm, selectDateComponent: DateUtils.getDateComponentsFromAlarm(alarm: targetAlarm))
             } else {
@@ -114,26 +122,30 @@ class AlarmsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int)
+        -> String? {
+            return AlarmUtils.getAlarmLabelByType(type: sectionHeaders[section])
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+//        return alarms.filterDuplicates({$0.type}).count
+        return sectionHeaders.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return alarms.count
+        return alarmsByGroup[sectionHeaders[section]]!.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        print("AlarmsViewController, cellForRowAt:" + "\(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as! AlarmCell
-        let alarm = alarms[indexPath.row] as Alarm
+        let alarm = alarmsByGroup[sectionHeaders[indexPath.section]]![indexPath.row] as Alarm
         cell.timeLabel.text = alarm.time
         cell.alarmId = alarm.id
         cell.repeatLabel.text = ""
-        cell.infoLabel.text = alarm.details.repeatInfo
+        cell.infoLabel.text = alarm.repeatInfo.repeatInfo + (alarm.info == "" ? "" : " | \(alarm.info)")
         cell.enableSwitch.isOn = alarm.isOn
         cell.changeColor()
         return cell
@@ -153,7 +165,7 @@ class AlarmsViewController: UITableViewController {
             let desController = navController.topViewController as! AlarmDetailViewController
             desController.navigationItem.title = "编辑闹钟"
             desController.type = "edit"
-            desController.alarm = sender as! Alarm
+            desController.alarm = sender as? Alarm
         }
     }
 
@@ -202,4 +214,19 @@ class AlarmsViewController: UITableViewController {
     }
     */
 
+}
+
+extension Array {
+    
+    // 去重
+    func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
+        var result = [Element]()
+        for value in self {
+            let key = filter(value)
+            if !result.map({filter($0)}).contains(key) {
+                result.append(value)
+            }
+        }
+        return result
+    }
 }

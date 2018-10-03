@@ -44,6 +44,11 @@ class DateUtils {
         return monthDayList[sysMonthDay - 1]
     }
     
+    static func getYearDateFromDateCompnents(month: Int, day: Int) -> String {
+        let monthDay = getMonthDayFromSysMonthDay(sysMonthDay: day)
+        return "\(month)月 \(monthDay)"
+    }
+    
     static func getSysMonthDayFromMonthDay(monthDay: String) -> Int {
         let monthDayList = getMonthdayList()
         let index = monthDayList.index(of: monthDay)!
@@ -91,15 +96,45 @@ class DateUtils {
         
         selectDateComponents.hour = Int(times[0])
         selectDateComponents.minute = Int(times[1])
-        if alarm.details.weekday != "" {
-            selectDateComponents.weekday = Int(alarm.details.weekday)
+        if alarm.repeatInfo.weekday != nil {
+            selectDateComponents.weekday = alarm.repeatInfo.weekday
         }
-        if alarm.details.day != "" {
-            selectDateComponents.day = Int(alarm.details.day)
+        if alarm.repeatInfo.day != nil {
+            selectDateComponents.day = alarm.repeatInfo.day
         }
-        if alarm.details.month != "" {
-            selectDateComponents.month = Int(alarm.details.month)
+        if alarm.repeatInfo.month != nil {
+            selectDateComponents.month = alarm.repeatInfo.month
         }
         return selectDateComponents
+    }
+    
+    static func getRepeatInfoFromAlarm(alarm: Alarm) -> String {
+//        let dateComponents = getDateComponentsFromAlarm(alarm: alarm)
+        let repeatTypeLabel = ALARM_REPEAT_TYPES[alarm.repeatInfo.repeatType]
+        let currentDateComponents = Calendar.current.dateComponents([.year, .month, .day, .weekday, .hour, .minute, .weekdayOrdinal], from: Date())
+        var dateInfo = ""
+        switch alarm.repeatInfo.repeatType {
+        case 3: // 每周
+            if alarm.repeatInfo.weekday != nil {
+                dateInfo = getWeekdayFromSysWeekday(sysWeekday: alarm.repeatInfo.weekday!)
+            } else {
+                dateInfo = getWeekdayFromSysWeekday(sysWeekday: currentDateComponents.weekday!)
+            }
+        case 4: // 每月
+            if alarm.repeatInfo.day != nil {
+                dateInfo = getMonthDayFromSysMonthDay(sysMonthDay: alarm.repeatInfo.day!)
+            } else {
+                dateInfo = getMonthDayFromSysMonthDay(sysMonthDay: currentDateComponents.day!)
+            }
+        case 5: // 每年
+            if alarm.repeatInfo.day != nil && alarm.repeatInfo.month != nil {
+                dateInfo = getYearDateFromDateCompnents(month: alarm.repeatInfo.month!, day: alarm.repeatInfo.day!)
+            } else {
+                dateInfo = getYearDateFromDateCompnents(month: alarm.repeatInfo.month == nil ? currentDateComponents.month! : alarm.repeatInfo.month!, day: alarm.repeatInfo.day == nil ? currentDateComponents.day! : alarm.repeatInfo.day!)
+            }
+        default:
+            dateInfo = ""
+        }
+        return repeatTypeLabel + dateInfo
     }
 }

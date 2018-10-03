@@ -11,7 +11,7 @@ import Eureka
 import AudioToolbox
 
 class AlarmSoundEditController: FormViewController {
-    var soundNameList: [String] = ["test", "a2"]
+    var soundNameList = ALARM_SOUNDS
     var selectSoundName: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()

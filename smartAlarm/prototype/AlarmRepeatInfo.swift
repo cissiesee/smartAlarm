@@ -8,18 +8,16 @@
 
 import UIKit
 
-class AlarmDetail: NSObject {
-    var repeatType: String
+class AlarmRepeatInfo: NSObject {
+    var repeatType: Int
     var repeatInfo: String
-    var sound: String
-    var weekday: String
-    var day: String
-    var month: String
+    var weekday: Int?
+    var day: Int?
+    var month: Int?
     
-    init(repeatType: String, repeatInfo: String, weekday: String, day: String, month: String, sound: String) {
+    init(repeatType: Int, repeatInfo: String, weekday: Int?, day: Int?, month: Int?) {
         self.repeatType = repeatType
         self.repeatInfo = repeatInfo
-        self.sound = sound
         self.weekday = weekday
         self.day = day
         self.month = month

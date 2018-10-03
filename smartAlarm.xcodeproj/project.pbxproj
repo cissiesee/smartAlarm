@@ -7,8 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3608A57620997DFA00E52CE0 /* AlarmDetail.swift */; };
+		3608A57720997DFA00E52CE0 /* AlarmRepeatInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3608A57620997DFA00E52CE0 /* AlarmRepeatInfo.swift */; };
 		362BAA0220B93F8E00C3CE7D /* LocalSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362BAA0120B93F8E00C3CE7D /* LocalSaver.swift */; };
+		36375F8A2116DB0300CBF8B2 /* AlarmImportantInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36375F892116DB0300CBF8B2 /* AlarmImportantInfo.swift */; };
+		36375F8C21254C1200CBF8B2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36375F8B21254C1200CBF8B2 /* CoreLocation.framework */; };
+		36375F8E2126CA2600CBF8B2 /* Wether.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36375F8D2126CA2600CBF8B2 /* Wether.swift */; };
+		36375F90213F745000CBF8B2 /* AlarmUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36375F8F213F745000CBF8B2 /* AlarmUtils.swift */; };
+		36375F93214523BB00CBF8B2 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36375F92214523BA00CBF8B2 /* iconfont.ttf */; };
+		36375F9721454E7D00CBF8B2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36375F9621454E7D00CBF8B2 /* SplashViewController.swift */; };
 		3640CE7E2094104300520D06 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE7D2094104300520D06 /* AppDelegate.swift */; };
 		3640CE802094104300520D06 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3640CE7F2094104300520D06 /* ViewController.swift */; };
 		3640CE832094104300520D06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3640CE812094104300520D06 /* Main.storyboard */; };
@@ -24,6 +30,7 @@
 		3658AC8220B3AE1E00BAA20E /* AlarmSoundEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3658AC8120B3AE1E00BAA20E /* AlarmSoundEditViewController.swift */; };
 		3658AC8420B3AE4100BAA20E /* AlarmInfoEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3658AC8320B3AE4100BAA20E /* AlarmInfoEditController.swift */; };
 		36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ADA73E209962500087F603 /* AlarmDetailViewController.swift */; };
+		36AE88A12164BB880078F59E /* LocationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AE88A02164BB880078F59E /* LocationUtils.swift */; };
 		36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B3E268209A9D3700FBDDB6 /* WebViewController.swift */; };
 		36B3E26C209AD3E400FBDDB6 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36B3E26B209AD3E400FBDDB6 /* WebKit.framework */; };
 		36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */; };
@@ -36,6 +43,7 @@
 		36D5151920D50C9100C2F385 /* AlarmSoundOnlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */; };
 		36D5151B20D6445900C2F385 /* AlarmSoundRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */; };
 		36D5151D20D78BA300C2F385 /* AlarmSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */; };
+		36E046E32110318A00877BA0 /* DictUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E046E22110318A00877BA0 /* DictUtils.swift */; };
 		36E39F4620EF17BC009A9815 /* AlarmRepeatEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */; };
 		36E39F4D20F21870009A9815 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E39F4C20F21870009A9815 /* UserNotifications.framework */; };
 		36E39F4F20F21870009A9815 /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36E39F4E20F21870009A9815 /* UserNotificationsUI.framework */; };
@@ -43,7 +51,7 @@
 		36E39F5520F21870009A9815 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36E39F5320F21870009A9815 /* MainInterface.storyboard */; };
 		36E39F5920F21870009A9815 /* noti.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 36E39F4B20F21870009A9815 /* noti.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		36E39F6020F3038C009A9815 /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F5F20F3038C009A9815 /* NotificationHandler.swift */; };
-		36E39F6220F86671009A9815 /* test.caf in Resources */ = {isa = PBXBuildFile; fileRef = 36E39F6120F86671009A9815 /* test.caf */; };
+		36E39F6220F86671009A9815 /* 默认.caf in Resources */ = {isa = PBXBuildFile; fileRef = 36E39F6120F86671009A9815 /* 默认.caf */; };
 		36E39F6420F8AC65009A9815 /* AlarmSoundEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F6320F8AC65009A9815 /* AlarmSoundEditController.swift */; };
 		36E39F6620FB2D91009A9815 /* NotificationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F6520FB2D91009A9815 /* NotificationUtils.swift */; };
 		36E39F6821009C55009A9815 /* AlarmImportantEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E39F6721009C55009A9815 /* AlarmImportantEditController.swift */; };
@@ -95,8 +103,14 @@
 
 /* Begin PBXFileReference section */
 		274804AE8FAC506EE8744098 /* Pods_smartAlarm.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartAlarm.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3608A57620997DFA00E52CE0 /* AlarmDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetail.swift; sourceTree = "<group>"; };
+		3608A57620997DFA00E52CE0 /* AlarmRepeatInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepeatInfo.swift; sourceTree = "<group>"; };
 		362BAA0120B93F8E00C3CE7D /* LocalSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSaver.swift; sourceTree = "<group>"; };
+		36375F892116DB0300CBF8B2 /* AlarmImportantInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmImportantInfo.swift; sourceTree = "<group>"; };
+		36375F8B21254C1200CBF8B2 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		36375F8D2126CA2600CBF8B2 /* Wether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wether.swift; sourceTree = "<group>"; };
+		36375F8F213F745000CBF8B2 /* AlarmUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmUtils.swift; sourceTree = "<group>"; };
+		36375F92214523BA00CBF8B2 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = iconfont.ttf; path = ../../../../../../Downloads/font_cxjtuki4a3n/iconfont.ttf; sourceTree = "<group>"; };
+		36375F9621454E7D00CBF8B2 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		3640CE7A2094104300520D06 /* smartAlarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartAlarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3640CE7D2094104300520D06 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3640CE7F2094104300520D06 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +132,7 @@
 		3658AC8120B3AE1E00BAA20E /* AlarmSoundEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundEditViewController.swift; sourceTree = "<group>"; };
 		3658AC8320B3AE4100BAA20E /* AlarmInfoEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmInfoEditController.swift; sourceTree = "<group>"; };
 		36ADA73E209962500087F603 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
+		36AE88A02164BB880078F59E /* LocationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUtils.swift; sourceTree = "<group>"; };
 		36B3E268209A9D3700FBDDB6 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		36B3E26B209AD3E400FBDDB6 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		36CC8D3A20AE6B33000D41E7 /* AlarmDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailCell.swift; sourceTree = "<group>"; };
@@ -130,6 +145,7 @@
 		36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundOnlineView.swift; sourceTree = "<group>"; };
 		36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundRecordView.swift; sourceTree = "<group>"; };
 		36D5151C20D78BA300C2F385 /* AlarmSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundCell.swift; sourceTree = "<group>"; };
+		36E046E22110318A00877BA0 /* DictUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictUtils.swift; sourceTree = "<group>"; };
 		36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmRepeatEditViewController.swift; sourceTree = "<group>"; };
 		36E39F4B20F21870009A9815 /* noti.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = noti.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		36E39F4C20F21870009A9815 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -138,7 +154,7 @@
 		36E39F5420F21870009A9815 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		36E39F5620F21870009A9815 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36E39F5F20F3038C009A9815 /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
-		36E39F6120F86671009A9815 /* test.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.caf; sourceTree = "<group>"; };
+		36E39F6120F86671009A9815 /* 默认.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "默认.caf"; sourceTree = "<group>"; };
 		36E39F6320F8AC65009A9815 /* AlarmSoundEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSoundEditController.swift; sourceTree = "<group>"; };
 		36E39F6520FB2D91009A9815 /* NotificationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationUtils.swift; sourceTree = "<group>"; };
 		36E39F6721009C55009A9815 /* AlarmImportantEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmImportantEditController.swift; sourceTree = "<group>"; };
@@ -157,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36375F8C21254C1200CBF8B2 /* CoreLocation.framework in Frameworks */,
 				36E5681C20E7AB6E00E3C6D5 /* libc++.tbd in Frameworks */,
 				36E5681A20E7AB5400E3C6D5 /* libsqlite3.0.tbd in Frameworks */,
 				36E5681820E7AB3D00E3C6D5 /* libz.tbd in Frameworks */,
@@ -192,6 +209,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36375F912145239900CBF8B2 /* iconfont */ = {
+			isa = PBXGroup;
+			children = (
+				36375F92214523BA00CBF8B2 /* iconfont.ttf */,
+			);
+			path = iconfont;
+			sourceTree = "<group>";
+		};
 		3640CE712094104300520D06 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +244,7 @@
 		3640CE7C2094104300520D06 /* smartAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				36375F912145239900CBF8B2 /* iconfont */,
 				36E39F5E20F3036E009A9815 /* notification */,
 				36E5681120DB808800E3C6D5 /* media */,
 				36D5151320D0E08A00C2F385 /* utils */,
@@ -271,6 +297,7 @@
 				36D5151820D50C9100C2F385 /* AlarmSoundOnlineView.swift */,
 				36D5151A20D6445900C2F385 /* AlarmSoundRecordView.swift */,
 				36E39F4520EF17BC009A9815 /* AlarmRepeatEditViewController.swift */,
+				36375F9621454E7D00CBF8B2 /* SplashViewController.swift */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -290,8 +317,10 @@
 		36B3E266209A99D600FBDDB6 /* prototype */ = {
 			isa = PBXGroup;
 			children = (
-				3608A57620997DFA00E52CE0 /* AlarmDetail.swift */,
+				3608A57620997DFA00E52CE0 /* AlarmRepeatInfo.swift */,
 				3640CEAD2094119000520D06 /* Alarm.swift */,
+				36375F892116DB0300CBF8B2 /* AlarmImportantInfo.swift */,
+				36375F8D2126CA2600CBF8B2 /* Wether.swift */,
 			);
 			path = prototype;
 			sourceTree = "<group>";
@@ -309,6 +338,7 @@
 		36B3E26A209AD3E300FBDDB6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				36375F8B21254C1200CBF8B2 /* CoreLocation.framework */,
 				36E5681B20E7AB6E00E3C6D5 /* libc++.tbd */,
 				36E5681920E7AB5400E3C6D5 /* libsqlite3.0.tbd */,
 				36E5681720E7AB3D00E3C6D5 /* libz.tbd */,
@@ -327,6 +357,9 @@
 				36D5151120D0E08000C2F385 /* DateUtils.swift */,
 				36D5151420D501E900C2F385 /* RecordManager.swift */,
 				36E39F6520FB2D91009A9815 /* NotificationUtils.swift */,
+				36E046E22110318A00877BA0 /* DictUtils.swift */,
+				36375F8F213F745000CBF8B2 /* AlarmUtils.swift */,
+				36AE88A02164BB880078F59E /* LocationUtils.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -352,7 +385,7 @@
 		36E5681120DB808800E3C6D5 /* media */ = {
 			isa = PBXGroup;
 			children = (
-				36E39F6120F86671009A9815 /* test.caf */,
+				36E39F6120F86671009A9815 /* 默认.caf */,
 			);
 			path = media;
 			sourceTree = "<group>";
@@ -499,9 +532,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36E39F6220F86671009A9815 /* test.caf in Resources */,
+				36E39F6220F86671009A9815 /* 默认.caf in Resources */,
 				3640CE882094104300520D06 /* LaunchScreen.storyboard in Resources */,
 				3640CE852094104300520D06 /* Assets.xcassets in Resources */,
+				36375F93214523BB00CBF8B2 /* iconfont.ttf in Resources */,
 				3640CE832094104300520D06 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -585,14 +619,19 @@
 				36D5151520D501E900C2F385 /* RecordManager.swift in Sources */,
 				3640CE802094104300520D06 /* ViewController.swift in Sources */,
 				36B3E269209A9D3700FBDDB6 /* WebViewController.swift in Sources */,
+				36375F9721454E7D00CBF8B2 /* SplashViewController.swift in Sources */,
+				36E046E32110318A00877BA0 /* DictUtils.swift in Sources */,
 				36ADA73F209962500087F603 /* AlarmDetailViewController.swift in Sources */,
 				3640CEB22094122D00520D06 /* AlarmList.swift in Sources */,
 				3640CE7E2094104300520D06 /* AppDelegate.swift in Sources */,
-				3608A57720997DFA00E52CE0 /* AlarmDetail.swift in Sources */,
+				3608A57720997DFA00E52CE0 /* AlarmRepeatInfo.swift in Sources */,
+				36AE88A12164BB880078F59E /* LocationUtils.swift in Sources */,
 				36CC8D3B20AE6B33000D41E7 /* AlarmDetailCell.swift in Sources */,
+				36375F90213F745000CBF8B2 /* AlarmUtils.swift in Sources */,
 				36D2FA64210ED2140085CDFC /* AlarmInsetTypeController.swift in Sources */,
 				362BAA0220B93F8E00C3CE7D /* LocalSaver.swift in Sources */,
 				36E39F4620EF17BC009A9815 /* AlarmRepeatEditViewController.swift in Sources */,
+				36375F8A2116DB0300CBF8B2 /* AlarmImportantInfo.swift in Sources */,
 				3640CEAC2094117100520D06 /* AlarmCell.swift in Sources */,
 				36D5151220D0E08000C2F385 /* DateUtils.swift in Sources */,
 				36E39F6020F3038C009A9815 /* NotificationHandler.swift in Sources */,
@@ -602,6 +641,7 @@
 				3640CEAE2094119000520D06 /* Alarm.swift in Sources */,
 				3640CEB02094121300520D06 /* AlarmsViewController.swift in Sources */,
 				36D5151720D50C7900C2F385 /* AlarmSoundLocalView.swift in Sources */,
+				36375F8E2126CA2600CBF8B2 /* Wether.swift in Sources */,
 				36CC8D3D20AE94AA000D41E7 /* constant.swift in Sources */,
 				36D5151D20D78BA300C2F385 /* AlarmSoundCell.swift in Sources */,
 				36D5150E20CBF34E00C2F385 /* AlarmRepeatCell.swift in Sources */,

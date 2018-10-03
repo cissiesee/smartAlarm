@@ -27,11 +27,16 @@ class AlarmInfoEditController: FormViewController {
             form.last! <<< ListCheckRow<String>(info){ listRow in
                 listRow.title = info
                 listRow.selectableValue = info
-                listRow.value = info
+                listRow.value = info == selectInfo ? info : nil
                 }.onChange({ listRow in
                     let selectableValue = selectableSection.selectedRow()?.selectableValue
                     if selectableValue != nil {
                         self.selectInfo = selectableValue!
+                        let switchRow = (self.form.rowBy(tag: "customSwitch") as! SwitchRow)
+                        if switchRow.value == true {
+                            switchRow.value = false
+                            switchRow.updateCell()
+                        }
                     }
                 })
         }
@@ -66,7 +71,7 @@ class AlarmInfoEditController: FormViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        let data = ["selectInfo": selectInfo]
+        let data = ["selectInfo": selectInfo != "" ? selectInfo : customInfo]
         NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "InfoSelectNotification"), object: data)
     }
 
